@@ -1,5 +1,3 @@
-import React from 'react';
-
 const App = () => {
   console.log('API URL:', process.env.API_URL);
   return (

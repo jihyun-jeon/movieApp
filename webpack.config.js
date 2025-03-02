@@ -43,7 +43,6 @@ const config = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env', '@babel/preset-react'],
               plugins: [!isProduction && require.resolve('react-refresh/babel')].filter(Boolean),
             },
           },
