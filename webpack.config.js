@@ -60,7 +60,7 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: [isProduction ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader'],
+        use: [isProduction ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader', 'postcss-loader'],
       },
     ],
   },
