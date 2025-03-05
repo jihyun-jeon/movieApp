@@ -1,7 +1,7 @@
-import { usePopularMovies, useTrendingMovies } from '../../api/tmdb';
-import { TMDB_LANGUAGE_KR } from '../../contants';
-import { Movie } from '../../types/Movie';
-import { getImageUrl } from '../../utils/tmdbUtils';
+import { usePopularMovies, useTrendingMovies } from '@/api/tmdb';
+import { TMDB_LANGUAGE_KR } from '@/contants';
+import { Movie } from '@/types/Movie';
+import { getImageUrl } from '@/utils/tmdbUtils';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 

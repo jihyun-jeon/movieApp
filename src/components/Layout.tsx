@@ -1,5 +1,5 @@
 import { Outlet, Link, Navigate, useLocation } from 'react-router-dom';
-import SearchBar from './SearchBar';
+import SearchBar from '@/components/SearchBar';
 
 const Layout = () => {
   const location = useLocation();

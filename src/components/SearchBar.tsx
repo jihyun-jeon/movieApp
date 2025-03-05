@@ -1,6 +1,6 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
-import useDebounce from '../hooks/useDebounce';
+import useDebounce from '@/hooks/useDebounce';
 
 const SearchBar = () => {
   const navigate = useNavigate();
