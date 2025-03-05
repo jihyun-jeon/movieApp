@@ -1,8 +1,8 @@
 import axiosInstance from './axios';
-import { MovieResponse } from '../types/Movie';
+import { baseSearchParam, keywordSearchParam, MovieResponse } from '../types/Movie';
 import { useQuery } from '@tanstack/react-query';
 
-export const usePopularMovies = (queryParams: { language: string; page?: number }) => {
+export const usePopularMovies = (queryParams: baseSearchParam) => {
   return useQuery({
     queryFn: () => {
       return axiosInstance<MovieResponse>({
@@ -15,7 +15,7 @@ export const usePopularMovies = (queryParams: { language: string; page?: number 
   });
 };
 
-export const useTrendingMovies = (queryParams: { language: string; page?: number }) => {
+export const useTrendingMovies = (queryParams: baseSearchParam) => {
   return useQuery({
     queryFn: () => {
       return axiosInstance<MovieResponse>({
@@ -25,6 +25,20 @@ export const useTrendingMovies = (queryParams: { language: string; page?: number
       }).then((res) => res.data);
     },
     queryKey: MoviesQuery.getMany('getTrending', queryParams),
+  });
+};
+
+// 검색어 필터
+export const useKeywordSearchMovies = (queryParams: keywordSearchParam) => {
+  return useQuery({
+    queryFn: () => {
+      return axiosInstance<MovieResponse>({
+        url: '/search/movie',
+        method: 'get',
+        params: queryParams,
+      }).then((res) => res.data);
+    },
+    queryKey: MoviesQuery.getMany('searchMovie', queryParams),
   });
 };
 

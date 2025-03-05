@@ -1,14 +1,13 @@
 import { usePopularMovies, useTrendingMovies } from '../../api/tmdb';
+import { TMDB_LANGUAGE_KR } from '../../contants';
 import { Movie } from '../../types/Movie';
 import { getImageUrl } from '../../utils/tmdbUtils';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-const TMDB_LANGUAGE = 'ko-KR';
-
 const Home = () => {
-  const popularMovies = usePopularMovies({ language: TMDB_LANGUAGE, page: 1 });
-  const trandingMovies = useTrendingMovies({ language: TMDB_LANGUAGE, page: 1 });
+  const popularMovies = usePopularMovies({ language: TMDB_LANGUAGE_KR, page: 1 });
+  const trandingMovies = useTrendingMovies({ language: TMDB_LANGUAGE_KR, page: 1 });
 
   return (
     <div className="text-white px-36">

@@ -21,3 +21,16 @@ export interface MovieResponse {
   total_pages: number;
   total_results: number;
 }
+
+export interface baseSearchParam {
+  language: string;
+  page?: number;
+}
+
+export interface genreSearchParam extends baseSearchParam {
+  with_genres?: number;
+}
+
+export interface keywordSearchParam extends baseSearchParam {
+  query?: string;
+}

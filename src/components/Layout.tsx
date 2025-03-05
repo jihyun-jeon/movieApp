@@ -1,4 +1,5 @@
 import { Outlet, Link, Navigate, useLocation } from 'react-router-dom';
+import SearchBar from './SearchBar';
 
 const Layout = () => {
   const location = useLocation();
@@ -17,13 +18,9 @@ const Layout = () => {
                 WATCHA
               </Link>
             </div>
-            <div>
-              <Link to="/search" className="hover:text-gray-400">
-                검색
-              </Link>
-            </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 ">
+              <SearchBar />
               <Link to="/login" className="hover:text-gray-400">
                 로그인
               </Link>
