@@ -3,6 +3,7 @@ import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -12,15 +13,14 @@ export default [
   },
   {
     languageOptions: {
-      globals: globals.browser,
-      env: {
-        node: true,
-      },
+      globals: { ...globals.node, ...globals.browser },
     },
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  pluginReact.configs.flat['jsx-runtime'],
+  reactHooks.configs['recommended-latest'],
   eslintPluginPrettierRecommended,
   {
     rules: {
