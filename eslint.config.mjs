@@ -4,6 +4,7 @@ import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import reactHooks from 'eslint-plugin-react-hooks';
+import noRelativeImportPaths from 'eslint-plugin-no-relative-import-paths';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -23,9 +24,16 @@ export default [
   reactHooks.configs['recommended-latest'],
   eslintPluginPrettierRecommended,
   {
+    plugins: {
+      'no-relative-import-paths': noRelativeImportPaths,
+    },
     rules: {
       'no-unused-vars': 'warn',
       'no-undef': 'error',
+      'no-relative-import-paths/no-relative-import-paths': [
+        'warn',
+        { allowSameFolder: false, prefix: '@', rootDir: 'src' },
+      ],
     },
   },
 ];
