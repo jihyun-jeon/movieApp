@@ -1,14 +1,15 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import useDebounce from '@/hooks/useDebounce';
+import useUrlParams from '@/hooks/useUrlParams';
 
 const SearchBar = () => {
   const navigate = useNavigate();
-  const { pathname, search } = useLocation();
+  const { pathname } = useLocation();
   const isSearchPage = pathname.includes('search');
 
-  const queryParams = new URLSearchParams(search);
-  const searchKeyword = queryParams.get('query');
+  const { getSearchParam, updateSearchParams } = useUrlParams();
+  const searchKeyword = getSearchParam('query');
 
   const [keyword, setKeyword] = useState(searchKeyword || '');
   const debouncedKeyword = useDebounce(keyword, 500);
@@ -18,11 +19,7 @@ const SearchBar = () => {
   };
 
   useEffect(() => {
-    if (debouncedKeyword) {
-      navigate(`/search?query=${debouncedKeyword}`, { replace: false });
-    } else {
-      navigate('/search', { replace: false });
-    }
+    updateSearchParams({ query: debouncedKeyword });
   }, [debouncedKeyword, navigate]);
 
   return (
