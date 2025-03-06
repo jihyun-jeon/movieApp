@@ -1,27 +1,71 @@
-import { useLocation } from 'react-router-dom';
-import { useKeywordSearchMovies } from '../../api/tmdb';
-import { Movie } from '../../types/Movie';
-import { getImageUrl } from '../../utils/tmdbUtils';
-import { TMDB_LANGUAGE_KR } from '../../contants';
+import { useEffect, useMemo, useState } from 'react';
+import { useGenreSearchMovies, useKeywordSearchMovies } from '@/api/tmdb';
+import { Movie } from '@/types/Movie';
+import { getImageUrl } from '@/utils/tmdbUtils';
+import { TMDB_LANGUAGE_KR } from '@/contants';
+import ToggleButtons from '@/pages/Search/components/ToggleButtons';
+import useUrlParams from '@/hooks/useUrlParams';
 
 const Search = () => {
-  const query = new URLSearchParams(useLocation().search);
-  const keyword = query.get('query') || '';
+  const { getSearchParam, updateSearchParams } = useUrlParams();
+  const searchKeyword = getSearchParam('query');
+  const searchGenre = getSearchParam('with_genres');
 
-  const trandingMovies = useKeywordSearchMovies({
-    language: TMDB_LANGUAGE_KR,
-    page: 1,
-    query: keyword,
-  });
+  const initialGenres = searchGenre?.split(',') || [];
+  const [selectedGenres, setSelectedGenres] = useState<string[]>(initialGenres);
+
+  const selectedGenresToString = selectedGenres.join(',');
+
+  useEffect(() => {
+    updateSearchParams({ with_genres: selectedGenresToString });
+  }, [selectedGenres]);
+
+  // 장르 필터 > 장르 api만 / 키워드 필터 > 키워드 api만 / 장르+키워드 필터 > 키워드 api만
+  const isGenreCall = selectedGenres.length > 0 && !searchKeyword;
+  const isKeywordCall = !!searchKeyword;
+
+  // 장르 필터
+  const genreMovies = useGenreSearchMovies(
+    {
+      language: TMDB_LANGUAGE_KR,
+      page: 1,
+      with_genres: selectedGenresToString,
+    },
+    isGenreCall && !!selectedGenresToString, // 빈 string이면 api 호출X
+  );
+
+  // 키워드 필터
+  const keywordMovies = useKeywordSearchMovies(
+    {
+      language: TMDB_LANGUAGE_KR,
+      page: 1,
+      query: searchKeyword || '',
+    },
+    isKeywordCall,
+  );
+
+  const renderMovies = useMemo(() => {
+    const genreData = genreMovies.data?.results || [];
+    const keywordData = keywordMovies.data?.results || [];
+
+    // 장르와 키워드 필터 모두 있을 경우
+    if (selectedGenres.length > 0 && keywordData.length > 0) {
+      return keywordData.filter((movie) => selectedGenres.every((genre) => movie.genre_ids.includes(+genre)));
+    } else if (keywordData.length > 0) {
+      return keywordData; // 키워드 필터만
+    } else if (genreData.length > 0) {
+      return genreData; // 장르 필터만
+    }
+  }, [genreMovies.data?.results, keywordMovies.data?.results, selectedGenres]);
 
   return (
     <div className="px-36">
       Search
-      <ul>
-        {trandingMovies.data?.results.map((movie: Movie) => {
+      <ToggleButtons selectedGenres={selectedGenres} setSelectedGenres={setSelectedGenres} />
+      <ul className="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] gap-5">
+        {renderMovies?.map((movie: Movie) => {
           return (
-            <li key={movie.id}>
-              {movie.title}
+            <li key={movie.id} className="w-full h-auto rounded-lg">
               {movie.poster_path && (
                 <img
                   src={getImageUrl(movie.poster_path, 'w500')}
@@ -29,6 +73,7 @@ const Search = () => {
                   className="w-full h-auto rounded-lg"
                 />
               )}
+              {movie.title}
             </li>
           );
         })}
