@@ -1,5 +1,6 @@
 import { usePopularMovies, useTrendingMovies } from '@/api/tmdb';
 import { TMDB_LANGUAGE_KR } from '@/contants';
+import useNavigateToContents from '@/hooks/usePathParams';
 import { Movie } from '@/types/Movie';
 import { getImageUrl } from '@/utils/tmdbUtils';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
@@ -8,6 +9,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 const Home = () => {
   const popularMovies = usePopularMovies({ language: TMDB_LANGUAGE_KR, page: 1 });
   const trandingMovies = useTrendingMovies({ language: TMDB_LANGUAGE_KR, page: 1 });
+
+  const { updatePathParam } = useNavigateToContents();
 
   return (
     <div className="text-white px-36">
@@ -30,7 +33,12 @@ const Home = () => {
           onSlideChange={() => console.log('slide change')}
         >
           {popularMovies.data?.results.map((movie: Movie) => (
-            <SwiperSlide key={movie.id}>
+            <SwiperSlide
+              key={movie.id}
+              onClick={() => {
+                updatePathParam('.', movie.id);
+              }}
+            >
               {movie.poster_path && (
                 <img
                   src={getImageUrl(movie.poster_path, 'w500')}
@@ -61,7 +69,12 @@ const Home = () => {
             onSlideChange={() => console.log('slide change')}
           >
             {trandingMovies.data?.results.map((movie: Movie, idx) => (
-              <SwiperSlide key={movie.id}>
+              <SwiperSlide
+                key={movie.id}
+                onClick={() => {
+                  updatePathParam('.', movie.id);
+                }}
+              >
                 <h1>{idx + 1}</h1>
                 {movie.poster_path && (
                   <img
