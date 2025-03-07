@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useGenreSearchMovies, useKeywordSearchMovies } from '@/api/tmdb';
 import { Movie } from '@/types/Movie';
-import { getImageUrl } from '@/utils/tmdbUtils';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import ToggleButtons from '@/pages/Search/components/ToggleButtons';
 import useUrlParams from '@/hooks/useUrlParams';
 import useNavigateToContents from '@/hooks/usePathParams';
+import PosterImage from '@/components/PosterImage';
 
 const Search = () => {
   const { getSearchParam, updateSearchParams } = useUrlParams();
@@ -75,13 +75,9 @@ const Search = () => {
               }}
               className="w-full h-auto rounded-lg"
             >
-              {movie.poster_path && (
-                <img
-                  src={getImageUrl(movie.poster_path, 'w500')}
-                  alt={movie.title}
-                  className="w-full h-auto rounded-lg"
-                />
-              )}
+              <div className="w-full aspect-[3/4] rounded-lg">
+                <PosterImage posterPath={movie?.poster_path} size="w500" />
+              </div>
               {movie.title}
             </li>
           );

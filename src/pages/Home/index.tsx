@@ -1,8 +1,8 @@
 import { usePopularMovies, useTrendingMovies } from '@/api/tmdb';
+import PosterImage from '@/components/PosterImage';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import useNavigateToContents from '@/hooks/usePathParams';
 import { Movie } from '@/types/Movie';
-import { getImageUrl } from '@/utils/tmdbUtils';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -39,13 +39,7 @@ const Home = () => {
                 updatePathParam('.', movie.id);
               }}
             >
-              {movie.poster_path && (
-                <img
-                  src={getImageUrl(movie.poster_path, 'w500')}
-                  alt={movie.title}
-                  className="w-full h-auto rounded-lg"
-                />
-              )}
+              <PosterImage posterPath={movie?.poster_path} size="w500" />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -76,13 +70,7 @@ const Home = () => {
                 }}
               >
                 <h1>{idx + 1}</h1>
-                {movie.poster_path && (
-                  <img
-                    src={getImageUrl(movie.poster_path, 'w342')}
-                    alt={movie.title}
-                    className="w-full h-auto rounded-lg"
-                  />
-                )}
+                <PosterImage posterPath={movie?.poster_path} size="w342" />
               </SwiperSlide>
             ))}
           </Swiper>
