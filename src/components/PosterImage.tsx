@@ -1,6 +1,6 @@
 import { getImageUrl } from '@/utils/tmdbUtils';
 
-type posterImageType = { posterPath: string | null; size: string };
+type posterImageType = { posterPath: string | null | undefined; size: string };
 
 const PosterImage = ({ posterPath, size }: posterImageType) => {
   return (

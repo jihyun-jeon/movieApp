@@ -1,8 +1,8 @@
-import { usePopularMovies, useTrendingMovies } from '@/api/tmdb';
+import { usePopularMovies, useTrendingMovies } from '@/api/movie';
 import PosterImage from '@/components/PosterImage';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import useNavigateToContents from '@/hooks/usePathParams';
-import { Movie } from '@/types/Movie';
+import { Movie } from '@/types/movie';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 

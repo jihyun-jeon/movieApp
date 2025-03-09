@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useGenreSearchMovies, useKeywordSearchMovies } from '@/api/tmdb';
-import { Movie } from '@/types/Movie';
+import { useGenreSearchMovies, useKeywordSearchMovies } from '@/api/movie';
+import { Movie } from '@/types/movie';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import ToggleButtons from '@/pages/Search/components/ToggleButtons';
 import useUrlParams from '@/hooks/useUrlParams';
