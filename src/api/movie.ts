@@ -1,5 +1,12 @@
 import axiosInstance from '@/api/axios';
-import { baseSearchParam, genreSearchParam, GenresResponse, keywordSearchParam, MovieResponse } from '@/types/Movie';
+import {
+  baseSearchParam,
+  genreSearchParam,
+  GenresResponse,
+  keywordSearchParam,
+  MovieDetail,
+  MovieResponse,
+} from '@/types/movie';
 import { useQuery } from '@tanstack/react-query';
 
 export const usePopularMovies = (queryParams: baseSearchParam) => {
@@ -72,7 +79,41 @@ export const useKeywordSearchMovies = (queryParams: keywordSearchParam, isFetchE
   });
 };
 
+// 비슷한 영화
+export const useGetSimilarMovie = (movieId: string, queryParams: baseSearchParam) => {
+  return useQuery({
+    queryFn: () => {
+      return axiosInstance<MovieResponse>({
+        url: `/movie/${movieId}/similar`,
+        method: 'get',
+        params: queryParams,
+      }).then((res) => res.data);
+    },
+    queryKey: MoviesQuery.getMany('similarMovie', movieId),
+  });
+};
+
+// 영화 세부정보
+export const useGetDateilMovie = (movieId: string, queryParams: baseSearchParam) => {
+  return useQuery({
+    queryFn: () => {
+      return axiosInstance<MovieDetail>({
+        url: `/movie/${movieId}`,
+        method: 'get',
+        params: queryParams,
+      }).then((res) => res.data);
+    },
+    queryKey: MoviesQuery.getOne(movieId),
+  });
+};
+
 export const MoviesQuery = {
   all: ['movies'],
-  getMany: (getCategory: string, queryParams?: any) => [...MoviesQuery.all, getCategory, JSON.stringify(queryParams)],
+  getMany: (getCategory: string, queryParams?: any) => [
+    ...MoviesQuery.all,
+    'getMany',
+    getCategory,
+    JSON.stringify(queryParams),
+  ],
+  getOne: (id: string) => [...MoviesQuery.all, 'getOne', id],
 };

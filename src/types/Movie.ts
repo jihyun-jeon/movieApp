@@ -33,6 +33,21 @@ export interface GenresResponse {
   genres: Genre[];
 }
 
+// 영화 세부정보
+export interface MovieDetail {
+  id: number;
+  backdrop_path: string | null;
+  poster_path: string | null;
+  title: string;
+  vote_average: number;
+  vote_count: number;
+  genres: Genre[];
+  runtime: number;
+  overview: string;
+  release_date: string;
+  video: boolean;
+}
+
 // 쿼리 파라미터
 export interface baseSearchParam {
   language: string;
