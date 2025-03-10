@@ -9,6 +9,8 @@ import PosterImage from '@/components/PosterImage';
 import '@/styles/custom.css';
 import { useGetCredit } from '@/api/actor';
 import DetailHeader from '@/pages/Detail/components/DetailHeader';
+import { useAuth } from '@/context/AuthContext';
+import SpinnerPortal from '@/components/Spinner';
 
 export default function Detail() {
   const [mode, setMode] = useState('info');
@@ -19,12 +21,15 @@ export default function Detail() {
 
   const { updatePathParam } = useNavigateToContents();
 
+  const { loading } = useAuth();
+
   useEffect(() => {
     setMode('info');
   }, [movieId]);
 
   return (
     <>
+      {loading && <SpinnerPortal />}
       <DetailHeader movieId={movieId!} />
       <main className="px-36">
         {/* 토글버튼 */}

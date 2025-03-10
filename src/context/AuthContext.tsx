@@ -16,18 +16,21 @@ type AuthContextType = {
   signOut: () => Promise<void>;
   signUp: (credentials: SignInWithPasswordCredentials) => Promise<AuthResponse>;
   getUser: (jwt?: string) => Promise<{ user: User } | AuthError>;
+  loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 function useProvideAuth(): AuthContextType {
   const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // 처음 로드시, 새로고침 후 - 세션 상태 확인
     const getSession = async () => {
       const { data } = await supabase.auth.getSession();
       setSession(data.session);
+      setLoading(false);
     };
 
     // 세션이 변경시 때마다(로그인, 로그아웃, 세션 만료 등) - 세션 상태 자동 업데이트
@@ -77,6 +80,7 @@ function useProvideAuth(): AuthContextType {
     signOut,
     signUp,
     getUser,
+    loading,
   };
 }
 
