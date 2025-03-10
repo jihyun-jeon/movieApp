@@ -1,8 +1,16 @@
-import { Outlet, Link, Navigate, useLocation } from 'react-router-dom';
+import { Outlet, Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from '@/components/SearchBar';
+import { useAuth } from '@/context/AuthContext';
 
 const Layout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { signOut, session } = useAuth();
+
+  const onLogout = () => {
+    signOut();
+    navigate('/movie');
+  };
 
   if (location.pathname === '/') {
     return <Navigate to="/movie" />;
@@ -21,12 +29,22 @@ const Layout = () => {
 
             <div className="flex items-center space-x-4 ">
               <SearchBar />
-              <Link to="/login" className="hover:text-gray-400">
-                로그인
-              </Link>
-              <Link to="/signup" className="bg-red-500 px-3 py-1 rounded-md">
-                회원가입
-              </Link>
+              {session ? (
+                <>
+                  <button type="button" onClick={onLogout}>
+                    로그아웃
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="hover:text-gray-400">
+                    로그인
+                  </Link>
+                  <Link to="/signup" className="bg-red-500 px-3 py-1 rounded-md">
+                    회원가입
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </header>
