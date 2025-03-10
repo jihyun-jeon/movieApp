@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import type {
+  SignUpWithPasswordCredentials,
   SignInWithPasswordCredentials,
   AuthTokenResponsePassword,
   Session,
   User,
+  AuthResponse,
   AuthError,
 } from '@supabase/supabase-js';
 
@@ -12,6 +14,7 @@ type AuthContextType = {
   session: Session | null;
   signIn: (credentials: SignInWithPasswordCredentials) => Promise<AuthTokenResponsePassword>;
   signOut: () => Promise<void>;
+  signUp: (credentials: SignInWithPasswordCredentials) => Promise<AuthResponse>;
   getUser: (jwt?: string) => Promise<{ user: User } | AuthError>;
 };
 
@@ -53,6 +56,11 @@ function useProvideAuth(): AuthContextType {
     }
   };
 
+  const signUp = async (credentials: SignUpWithPasswordCredentials) => {
+    const response = await supabase.auth.signUp(credentials);
+    return response;
+  };
+
   const getUser = async (jwt?: string): Promise<{ user: User } | AuthError> => {
     const { data, error } = await supabase.auth.getUser();
     if (error) {
@@ -67,6 +75,7 @@ function useProvideAuth(): AuthContextType {
     session,
     signIn,
     signOut,
+    signUp,
     getUser,
   };
 }
