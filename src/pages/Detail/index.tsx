@@ -11,6 +11,7 @@ import { useGetCredit } from '@/api/actor';
 import DetailHeader from '@/pages/Detail/components/DetailHeader';
 import { useAuth } from '@/context/AuthContext';
 import SpinnerPortal from '@/components/Spinner';
+import Comments from '@/pages/Detail/components/Comments';
 
 export default function Detail() {
   const [mode, setMode] = useState('info');
@@ -67,7 +68,7 @@ export default function Detail() {
               <ul className="grid grid-cols-2 gap-4 mt-5">
                 {credit.data?.cast.slice(0, 10).map((data) => {
                   return (
-                    <li key={data.id} className="flex">
+                    <li key={data.credit_id} className="flex">
                       <div className="w-16">
                         {data.profile_path && <img src={getImageUrl(data.profile_path, 'w342')} className="w-full" />}
                       </div>
@@ -82,6 +83,7 @@ export default function Detail() {
             </div>
             <div className="py-5">
               <h2 className="font-semibold">사용자 리뷰</h2>
+              <Comments movieId={Number(movieId!)} />
             </div>
           </>
         )}

@@ -3,7 +3,90 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never;
+      Comments: {
+        Row: {
+          created_at: string;
+          id: number;
+          movie_id: number | null;
+          review: string | null;
+          user_id: string | null;
+          user_name: string | null;
+          vote: number | null;
+        };
+        Insert: {
+          created_at?: string;
+          id?: number;
+          movie_id?: number | null;
+          review?: string | null;
+          user_id?: string | null;
+          user_name?: string | null;
+          vote?: number | null;
+        };
+        Update: {
+          created_at?: string;
+          id?: number;
+          movie_id?: number | null;
+          review?: string | null;
+          user_id?: string | null;
+          user_name?: string | null;
+          vote?: number | null;
+        };
+        Relationships: [];
+      };
+      Favorites: {
+        Row: {
+          created_at: string;
+          id: number;
+          img_url: string | null;
+          movie_id: number | null;
+          title: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          id?: number;
+          img_url?: string | null;
+          movie_id?: number | null;
+          title?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          id?: number;
+          img_url?: string | null;
+          movie_id?: number | null;
+          title?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      Todos: {
+        Row: {
+          content: string | null;
+          created_at: string;
+          id: number;
+          is_done: boolean | null;
+          title: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          content?: string | null;
+          created_at?: string;
+          id?: number;
+          is_done?: boolean | null;
+          title?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          content?: string | null;
+          created_at?: string;
+          id?: number;
+          is_done?: boolean | null;
+          title?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
