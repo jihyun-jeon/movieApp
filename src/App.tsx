@@ -4,6 +4,9 @@ import Home from '@/pages/Home';
 import Detail from '@/pages/Detail';
 import NotFound from '@/pages/NotFound';
 import Search from '@/pages/Search';
+import Signup from '@/pages/Signup';
+import Login from '@/pages/Login';
+import { AuthContextProvider } from '@/context/AuthContext';
 
 const router = createBrowserRouter([
   {
@@ -14,13 +17,19 @@ const router = createBrowserRouter([
       { path: 'movie', element: <Home /> },
       { path: 'movie/:movieId', element: <Detail /> },
       { path: 'search', element: <Search /> },
+      { path: 'login', element: <Login /> },
+      { path: 'signup', element: <Signup /> },
     ],
   },
   { path: '*', element: <NotFound /> },
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthContextProvider>
+      <RouterProvider router={router} />;
+    </AuthContextProvider>
+  );
 }
 
 export default App;
