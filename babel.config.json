@@ -1,0 +1,13 @@
+{
+  "presets": [
+    "@babel/preset-env",
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic" // JSX 변환을 자동으로 처리
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "plugins": [["@babel/plugin-transform-runtime", { "corejs": 3 }]]
+}
