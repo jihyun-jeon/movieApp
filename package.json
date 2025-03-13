@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack serve --open",
-    "build": "cross-env NODE_ENV=production webpack",
+    "start": "cross-env NODE_ENV=development webpack serve --config webpack.dev.js --open",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
     "dev": "webpack serve --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,15 +22,14 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "core-js": "^3.40.0",
-    "eslint-plugin-no-relative-import-paths": "^1.6.1",
-    "eslint-plugin-react-hooks": "^5.2.0",
     "lucide-react": "^0.477.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^6.3.0",
     "swiper": "^11.2.5",
     "tailwind-merge": "^3.0.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "webpack-merge": "^6.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
@@ -52,8 +51,10 @@
     "dotenv-webpack": "^8.1.0",
     "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.2",
+    "eslint-plugin-no-relative-import-paths": "^1.6.1",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "globals": "^16.0.0",
     "html-webpack-plugin": "^5.6.3",
