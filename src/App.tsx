@@ -1,11 +1,24 @@
-const App = () => {
-  console.log('API URL:', process.env.API_URL);
-  return (
-    <div className="app-container">
-      <h1 className="underline">Hello, Webpack with React and TypeScript!</h1>
-      <img src={'/asset/sample.png'} />
-    </div>
-  );
-};
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import Detail from './pages/Detail';
+import NotFound from './pages/NotFound';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      { index: true, element: <Navigate to="/movie" replace /> },
+      { path: 'movie', element: <Home /> },
+      { path: 'movie/:movieId', element: <Detail /> },
+    ],
+  },
+  { path: '*', element: <NotFound /> },
+]);
+
+function App() {
+  return <RouterProvider router={router} />;
+}
 
 export default App;

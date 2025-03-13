@@ -13,9 +13,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@tanstack/react-query": "^5.67.1",
+    "axios": "^1.8.1",
     "core-js": "^3.40.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-router-dom": "^6.3.0",
+    "swiper": "^11.2.5",
     "webpack-merge": "^6.0.1"
   },
   "devDependencies": {
