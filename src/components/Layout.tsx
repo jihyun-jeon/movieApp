@@ -1,9 +1,8 @@
-import { Outlet, Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import SearchBar from '@/components/SearchBar';
 import { useAuth } from '@/context/AuthContext';
 
 const Layout = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const { signOut, session } = useAuth();
 
@@ -11,10 +10,6 @@ const Layout = () => {
     signOut();
     navigate('/movie');
   };
-
-  if (location.pathname === '/') {
-    return <Navigate to="/movie" />;
-  }
 
   return (
     <>
