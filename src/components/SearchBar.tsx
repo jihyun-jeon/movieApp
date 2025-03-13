@@ -1,10 +1,9 @@
 import { SetStateAction, useEffect, useState } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import useDebounce from '@/hooks/useDebounce';
 import useUrlParams from '@/hooks/useUrlParams';
 
 const SearchBar = () => {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
   const isSearchPage = pathname.includes('search');
 
@@ -20,7 +19,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     updateSearchParams({ query: debouncedKeyword });
-  }, [debouncedKeyword, navigate]);
+  }, [debouncedKeyword]);
 
   return (
     <>
