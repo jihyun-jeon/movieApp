@@ -1,3 +1,4 @@
+// 영화 리스트
 export interface Movie {
   adult: boolean;
   backdrop_path: string | null;
@@ -20,4 +21,28 @@ export interface MovieResponse {
   results: Movie[];
   total_pages: number;
   total_results: number;
+}
+
+// 장르
+export interface Genre {
+  id: number;
+  name: string;
+}
+
+export interface GenresResponse {
+  genres: Genre[];
+}
+
+// 쿼리 파라미터
+export interface baseSearchParam {
+  language: string;
+  page?: number;
+}
+
+export interface genreSearchParam extends baseSearchParam {
+  with_genres?: string;
+}
+
+export interface keywordSearchParam extends baseSearchParam {
+  query?: string;
 }

@@ -1,0 +1,37 @@
+/* tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-black text-white;
+}
+
+/* Swiper */
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+@import 'swiper/css/scrollbar';
+
+.swiper-pagination-bullet {
+  background: gray;
+  opacity: 1;
+}
+.swiper-pagination-bullet-active {
+  background-color: white;
+  opacity: 1;
+}
+
+.swiper {
+  padding: 20px 0 35px 0;
+}
+
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  width: auto;
+  right: 0;
+  left: auto;
+  margin: 10px 10px 0 0;
+}

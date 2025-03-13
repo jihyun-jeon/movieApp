@@ -66,6 +66,9 @@ const config = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
+    alias: {
+      '@': path.resolve('./src'),
+    },
   },
   devtool: isProduction ? 'hidden-source-map' : 'eval-cheap-module-source-map',
   devServer: {
