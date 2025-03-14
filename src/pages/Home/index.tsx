@@ -1,4 +1,4 @@
-import { usePopularMovies, useTrendingMovies } from '@/api/movie';
+import { usePopularMoviesQuery, useTrendingMoviesQuery } from '@/api/movie';
 import PosterImage from '@/components/PosterImage';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import useNavigateToContents from '@/hooks/usePathParams';
@@ -7,8 +7,8 @@ import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/module
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 const Home = () => {
-  const popularMovies = usePopularMovies({ language: TMDB_LANGUAGE_KR, page: 1 });
-  const trandingMovies = useTrendingMovies({ language: TMDB_LANGUAGE_KR, page: 1 });
+  const popularMovies = usePopularMoviesQuery({ language: TMDB_LANGUAGE_KR, page: 1 });
+  const trandingMovies = useTrendingMoviesQuery({ language: TMDB_LANGUAGE_KR, page: 1 });
 
   const { updatePathParam } = useNavigateToContents();
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CommnetQuery, useAddComment, useDeleteComment, useGetComments } from '@/api/comment';
+import { CommnetQuery, useAddComment, useDeleteComment, useGetCommentsQuery } from '@/api/comment';
 import { useAuth } from '@/context/AuthContext';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -12,7 +12,7 @@ const Comments = ({ movieId }: { movieId: number }) => {
   const userEmail = getUser.session?.user.email;
 
   const queryClient = useQueryClient();
-  const comments = useGetComments(movieId);
+  const comments = useGetCommentsQuery(movieId);
 
   const addCommnet = useAddComment();
   const deleteCommnet = useDeleteComment();

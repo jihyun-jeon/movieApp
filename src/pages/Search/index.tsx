@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useGenreSearchMovies, useKeywordSearchMovies } from '@/api/movie';
+import { useGenreSearchMoviesQuery, useKeywordSearchMoviesQuery } from '@/api/movie';
 import { Movie } from '@/types/movie';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import ToggleButtons from '@/pages/Search/components/ToggleButtons';
@@ -28,7 +28,7 @@ const Search = () => {
   const isKeywordCall = !!searchKeyword;
 
   // 장르 필터
-  const genreMovies = useGenreSearchMovies(
+  const genreMovies = useGenreSearchMoviesQuery(
     {
       language: TMDB_LANGUAGE_KR,
       page: 1,
@@ -38,7 +38,7 @@ const Search = () => {
   );
 
   // 키워드 필터
-  const keywordMovies = useKeywordSearchMovies(
+  const keywordMovies = useKeywordSearchMoviesQuery(
     {
       language: TMDB_LANGUAGE_KR,
       page: 1,

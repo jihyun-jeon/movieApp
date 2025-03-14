@@ -4,7 +4,7 @@ import { baseSearchParam } from '@/types/movie';
 import { MovieCredit } from '@/types/actor';
 
 // 영화 크레딧
-export const useGetCredit = (movieId: string, queryParams: baseSearchParam) => {
+export const useGetCreditQuery = (movieId: string, queryParams: baseSearchParam) => {
   return useQuery({
     queryFn: () => {
       return axiosInstance<MovieCredit>({

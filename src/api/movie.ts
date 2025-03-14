@@ -9,7 +9,7 @@ import {
 } from '@/types/movie';
 import { useQuery } from '@tanstack/react-query';
 
-export const usePopularMovies = (queryParams: baseSearchParam) => {
+export const usePopularMoviesQuery = (queryParams: baseSearchParam) => {
   return useQuery({
     queryFn: () => {
       return axiosInstance<MovieResponse>({
@@ -22,7 +22,7 @@ export const usePopularMovies = (queryParams: baseSearchParam) => {
   });
 };
 
-export const useTrendingMovies = (queryParams: baseSearchParam) => {
+export const useTrendingMoviesQuery = (queryParams: baseSearchParam) => {
   return useQuery({
     queryFn: () => {
       return axiosInstance<MovieResponse>({
@@ -36,7 +36,7 @@ export const useTrendingMovies = (queryParams: baseSearchParam) => {
 };
 
 // 장르 목록 요청
-export const useGetGenres = (queryParams: baseSearchParam) => {
+export const useGetGenresQuery = (queryParams: baseSearchParam) => {
   return useQuery({
     queryFn: () => {
       return axiosInstance<GenresResponse>({
@@ -50,7 +50,7 @@ export const useGetGenres = (queryParams: baseSearchParam) => {
 };
 
 // 장르 필터
-export const useGenreSearchMovies = (queryParams: genreSearchParam, isFetchEnabled: boolean) => {
+export const useGenreSearchMoviesQuery = (queryParams: genreSearchParam, isFetchEnabled: boolean) => {
   return useQuery({
     enabled: isFetchEnabled,
     queryFn: () => {
@@ -65,7 +65,7 @@ export const useGenreSearchMovies = (queryParams: genreSearchParam, isFetchEnabl
 };
 
 // 검색어 필터
-export const useKeywordSearchMovies = (queryParams: keywordSearchParam, isFetchEnabled: boolean) => {
+export const useKeywordSearchMoviesQuery = (queryParams: keywordSearchParam, isFetchEnabled: boolean) => {
   return useQuery({
     enabled: isFetchEnabled,
     queryFn: () => {
@@ -80,7 +80,7 @@ export const useKeywordSearchMovies = (queryParams: keywordSearchParam, isFetchE
 };
 
 // 비슷한 영화
-export const useGetSimilarMovie = (movieId: string, queryParams: baseSearchParam) => {
+export const useGetSimilarMovieQuery = (movieId: string, queryParams: baseSearchParam) => {
   return useQuery({
     queryFn: () => {
       return axiosInstance<MovieResponse>({
@@ -94,7 +94,7 @@ export const useGetSimilarMovie = (movieId: string, queryParams: baseSearchParam
 };
 
 // 영화 세부정보
-export const useGetDateilMovie = (movieId: string, queryParams: baseSearchParam) => {
+export const useGetDateilMovieQuery = (movieId: string, queryParams: baseSearchParam) => {
   return useQuery({
     queryFn: () => {
       return axiosInstance<MovieDetail>({
