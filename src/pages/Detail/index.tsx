@@ -1,4 +1,4 @@
-import { useGetSimilarMovieQuery } from '@/api/movie';
+import { useGetSimilarMovieQuery } from '@/hooks/query/useMovie';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import { getImageUrl } from '@/utils/tmdbUtils';
 import { ToggleGroup, ToggleGroupItem } from '@radix-ui/react-toggle-group';
@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import useNavigateToContents from '@/hooks/usePathParams';
 import PosterImage from '@/components/PosterImage';
 import '@/styles/custom.css';
-import { useGetCreditQuery } from '@/api/actor';
+import { useGetCreditQuery } from '@/hooks/query/useActor';
 import DetailHeader from '@/pages/Detail/components/DetailHeader';
 import { useAuth } from '@/context/AuthContext';
 import SpinnerPortal from '@/components/Spinner';

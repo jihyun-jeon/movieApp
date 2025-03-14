@@ -1,4 +1,4 @@
-import { usePopularMoviesQuery, useTrendingMoviesQuery } from '@/api/movie';
+import { usePopularMoviesQuery, useTrendingMoviesQuery } from '@/hooks/query/useMovie';
 import PosterImage from '@/components/PosterImage';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import useNavigateToContents from '@/hooks/usePathParams';
