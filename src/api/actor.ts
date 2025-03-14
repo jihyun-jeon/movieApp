@@ -4,18 +4,16 @@ import { baseSearchParam } from '@/types/movie';
 import { MovieCredit } from '@/types/actor';
 
 // 영화 크레딧
-export const useGetCreditQuery = (movieId: string, queryParams: baseSearchParam) => {
-  return useQuery({
-    queryFn: () => {
-      return axiosInstance<MovieCredit>({
+export const useGetCreditQuery = (movieId: string, queryParams: baseSearchParam) =>
+  useQuery({
+    queryFn: () =>
+      axiosInstance<MovieCredit>({
         url: `/movie/${movieId}/credits`,
         method: 'get',
         params: queryParams,
-      }).then((res) => res.data);
-    },
+      }).then((res) => res.data),
     queryKey: ActorQuery.getMany('credits', queryParams),
   });
-};
 
 export const ActorQuery = {
   all: ['actor'],

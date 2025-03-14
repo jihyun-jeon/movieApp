@@ -66,22 +66,20 @@ const Search = () => {
       Search
       <ToggleButtons selectedGenres={selectedGenres} setSelectedGenres={setSelectedGenres} />
       <ul className="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] gap-5">
-        {renderMovies?.map((movie: Movie) => {
-          return (
-            <li
-              key={movie.id}
-              onClick={() => {
-                updatePathParam('/movie', movie.id);
-              }}
-              className="w-full h-auto rounded-lg"
-            >
-              <div className="w-full aspect-[3/4] rounded-lg">
-                <PosterImage posterPath={movie?.poster_path} size="w500" />
-              </div>
-              {movie.title}
-            </li>
-          );
-        })}
+        {renderMovies?.map((movie: Movie) => (
+          <li
+            key={movie.id}
+            onClick={() => {
+              updatePathParam('/movie', movie.id);
+            }}
+            className="w-full h-auto rounded-lg"
+          >
+            <div className="w-full aspect-[3/4] rounded-lg">
+              <PosterImage posterPath={movie?.poster_path} size="w500" />
+            </div>
+            {movie.title}
+          </li>
+        ))}
       </ul>
     </div>
   );

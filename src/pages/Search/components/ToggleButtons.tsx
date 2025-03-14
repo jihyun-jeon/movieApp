@@ -24,19 +24,17 @@ const ToggleButtons: React.FC<ToggleButtonsProps> = ({ selectedGenres, setSelect
       aria-label="Genre selection"
       className="flex flex-wrap gap-2"
     >
-      {genreIds.data?.genres.map((data: Genre) => {
-        return (
-          <ToggleGroupItem
-            value={`${data.id}`}
-            key={data.id}
-            className={`${
-              selectedGenres?.includes(`${data.id}`) ? 'bg-white border-white' : 'bg-black border-[#84868d]'
-            } flex-none mr-1 py-2 px-4 rounded-lg transition-colors duration-200 border text-[#84868d]`}
-          >
-            {data.name}
-          </ToggleGroupItem>
-        );
-      })}
+      {genreIds.data?.genres.map((data: Genre) => (
+        <ToggleGroupItem
+          value={`${data.id}`}
+          key={data.id}
+          className={`${
+            selectedGenres?.includes(`${data.id}`) ? 'bg-white border-white' : 'bg-black border-[#84868d]'
+          } flex-none mr-1 py-2 px-4 rounded-lg transition-colors duration-200 border text-[#84868d]`}
+        >
+          {data.name}
+        </ToggleGroupItem>
+      ))}
     </ToggleGroup>
   );
 };
