@@ -1,10 +1,10 @@
-import { useGetDateilMovieQuery } from '@/api/movie';
+import { useGetDetailMovieQuery } from '@/hooks/query/useMovie';
 import PosterImage from '@/components/PosterImage';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import { getImageUrl } from '@/utils/tmdbUtils';
 
 const DetailHeader = ({ movieId }: { movieId: string }) => {
-  const movieInfo = useGetDateilMovieQuery(movieId, { language: TMDB_LANGUAGE_KR });
+  const movieInfo = useGetDetailMovieQuery(movieId, { language: TMDB_LANGUAGE_KR });
 
   return (
     <header

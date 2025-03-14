@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useGenreSearchMoviesQuery, useKeywordSearchMoviesQuery } from '@/api/movie';
+import { useGenreSearchMoviesQuery, useKeywordSearchMoviesQuery } from '@/hooks/query/useMovie';
 import { Movie } from '@/types/movie';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import ToggleButtons from '@/pages/Search/components/ToggleButtons';

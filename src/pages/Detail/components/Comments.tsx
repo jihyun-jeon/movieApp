@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CommnetQuery, useAddComment, useDeleteComment, useGetCommentsQuery } from '@/api/comment';
+import { CommentQueryKey, useAddComment, useDeleteComment, useGetCommentsQuery } from '@/hooks/query/useComment';
 import { useAuth } from '@/context/AuthContext';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -33,7 +33,7 @@ const Comments = ({ movieId }: { movieId: number }) => {
 
     addCommnet.mutate(commentData, {
       onSuccess: (data) => {
-        queryClient.invalidateQueries({ queryKey: CommnetQuery.getMany(movieId) });
+        queryClient.invalidateQueries({ queryKey: CommentQueryKey.getMany(movieId) });
         setComment(initialCommentState);
       },
       onError: (error) => {
@@ -51,7 +51,7 @@ const Comments = ({ movieId }: { movieId: number }) => {
     const deleteData = { userId, movieId };
     deleteCommnet.mutate(deleteData, {
       onSuccess: (data) => {
-        queryClient.invalidateQueries({ queryKey: CommnetQuery.getMany(movieId) });
+        queryClient.invalidateQueries({ queryKey: CommentQueryKey.getMany(movieId) });
       },
       onError: (error) => {
         console.error('error', error);
@@ -93,7 +93,7 @@ const Comments = ({ movieId }: { movieId: number }) => {
         </button>
       </div>
       <ul>
-        {comments.data?.data?.map((comment) => (
+        {comments.data?.map((comment) => (
           <li key={comment.id} className="border">
             <div>{comment.user_name}</div>
             <div>
