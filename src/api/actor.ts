@@ -1,26 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
 import axiosInstance from '@/api/axios';
 import { baseSearchParam } from '@/types/movie';
 import { MovieCredit } from '@/types/actor';
 
-// 영화 크레딧
-export const useGetCreditQuery = (movieId: string, queryParams: baseSearchParam) =>
-  useQuery({
-    queryFn: () =>
-      axiosInstance<MovieCredit>({
-        url: `/movie/${movieId}/credits`,
-        method: 'get',
-        params: queryParams,
-      }).then((res) => res.data),
-    queryKey: ActorQuery.getMany('credits', queryParams),
+/** 영화 크레딧 정보 요청 */
+export const fetchCredit = async (movieId: string, queryParams: baseSearchParam) => {
+  const { data } = await axiosInstance<MovieCredit>({
+    url: `/movie/${movieId}/credits`,
+    method: 'get',
+    params: queryParams,
   });
-
-export const ActorQuery = {
-  all: ['actor'],
-  getMany: (getCategory: string, queryParams?: any) => [
-    ...ActorQuery.all,
-    'getMany',
-    getCategory,
-    JSON.stringify(queryParams),
-  ],
+  return data;
 };
