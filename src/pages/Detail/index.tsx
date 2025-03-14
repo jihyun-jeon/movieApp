@@ -1,4 +1,4 @@
-import { useGetSimilarMovie } from '@/api/movie';
+import { useGetSimilarMovieQuery } from '@/api/movie';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import { getImageUrl } from '@/utils/tmdbUtils';
 import { ToggleGroup, ToggleGroupItem } from '@radix-ui/react-toggle-group';
@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import useNavigateToContents from '@/hooks/usePathParams';
 import PosterImage from '@/components/PosterImage';
 import '@/styles/custom.css';
-import { useGetCredit } from '@/api/actor';
+import { useGetCreditQuery } from '@/api/actor';
 import DetailHeader from '@/pages/Detail/components/DetailHeader';
 import { useAuth } from '@/context/AuthContext';
 import SpinnerPortal from '@/components/Spinner';
@@ -17,8 +17,8 @@ export default function Detail() {
   const [mode, setMode] = useState('info');
   const { movieId } = useParams();
 
-  const credit = useGetCredit(movieId!, { language: TMDB_LANGUAGE_KR });
-  const similar = useGetSimilarMovie(movieId!, { language: TMDB_LANGUAGE_KR });
+  const credit = useGetCreditQuery(movieId!, { language: TMDB_LANGUAGE_KR });
+  const similar = useGetSimilarMovieQuery(movieId!, { language: TMDB_LANGUAGE_KR });
 
   const { updatePathParam } = useNavigateToContents();
 

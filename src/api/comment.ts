@@ -3,7 +3,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { Comment, DeleteCommentParams } from '@/types/comment';
 
 // 영화 댓글 조회
-export const useGetComments = (movieId: number) => {
+export const useGetCommentsQuery = (movieId: number) => {
   return useQuery({
     queryFn: async () => {
       return await supabase.from('Comments').select('*').eq('movie_id', movieId);
