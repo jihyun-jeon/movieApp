@@ -34,6 +34,7 @@ export default [
         'warn',
         { allowSameFolder: false, prefix: '@', rootDir: 'src' },
       ],
+      'arrow-body-style': ['error', 'as-needed'],
     },
   },
 ];

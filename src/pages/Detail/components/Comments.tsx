@@ -93,16 +93,14 @@ const Comments = ({ movieId }: { movieId: number }) => {
         </button>
       </div>
       <ul>
-        {comments.data?.data?.map((comment) => {
-          return (
-            <li key={comment.id} className="border">
-              <div>{comment.user_name}</div>
-              <div>
-                평점 : {comment.vote} / 리뷰 : {comment.review}
-              </div>
-            </li>
-          );
-        })}
+        {comments.data?.data?.map((comment) => (
+          <li key={comment.id} className="border">
+            <div>{comment.user_name}</div>
+            <div>
+              평점 : {comment.vote} / 리뷰 : {comment.review}
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );
