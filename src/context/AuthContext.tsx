@@ -5,17 +5,14 @@ import type {
   SignInWithPasswordCredentials,
   AuthTokenResponsePassword,
   Session,
-  User,
   AuthResponse,
-  AuthError,
 } from '@supabase/supabase-js';
 
 type AuthContextType = {
   session: Session | null;
-  signIn: (credentials: SignInWithPasswordCredentials) => Promise<AuthTokenResponsePassword>;
+  signIn: (credentials: SignInWithPasswordCredentials) => Promise<AuthTokenResponsePassword['data']>;
   signOut: () => Promise<void>;
-  signUp: (credentials: SignInWithPasswordCredentials) => Promise<AuthResponse>;
-  getUser: (jwt?: string) => Promise<{ user: User } | AuthError>;
+  signUp: (credentials: SignInWithPasswordCredentials) => Promise<AuthResponse['data']>;
   loading: boolean;
 };
 
@@ -46,31 +43,21 @@ function useProvideAuth(): AuthContextType {
   }, []);
 
   const signIn = async (credentials: SignInWithPasswordCredentials) => {
-    const res = await supabase.auth.signInWithPassword(credentials);
-    return res;
+    const { data, error } = await supabase.auth.signInWithPassword(credentials);
+
+    if (error) throw error;
+    return data;
   };
 
   const signOut = async () => {
-    const res = await supabase.auth.signOut();
-    if (res.error) {
-      console.log('Error signOut :', res.error);
-    } else {
-      setSession(null);
-    }
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+    setSession(null);
   };
 
   const signUp = async (credentials: SignUpWithPasswordCredentials) => {
-    const response = await supabase.auth.signUp(credentials);
-    return response;
-  };
-
-  const getUser = async (jwt?: string): Promise<{ user: User } | AuthError> => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error) {
-      console.log('Error getUser:', error.message);
-      return error;
-    }
-
+    const { data, error } = await supabase.auth.signUp(credentials);
+    if (error) throw error;
     return data;
   };
 
@@ -79,7 +66,6 @@ function useProvideAuth(): AuthContextType {
     signIn,
     signOut,
     signUp,
-    getUser,
     loading,
   };
 }

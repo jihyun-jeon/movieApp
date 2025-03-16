@@ -6,8 +6,12 @@ const Layout = () => {
   const navigate = useNavigate();
   const { signOut, session } = useAuth();
 
-  const onLogout = () => {
-    signOut();
+  const onLogout = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.log('Logout error:', error);
+    }
     navigate('/movie');
   };
 

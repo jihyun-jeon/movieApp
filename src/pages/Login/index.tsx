@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES } from '@/contants';
 import { useAuth } from '@/context/AuthContext';
 import { AuthError } from '@supabase/supabase-js';
 import { useState } from 'react';
@@ -13,15 +14,18 @@ const Login = () => {
 
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const { data, error } = await signIn({ email, password });
+    try {
+      const data = await signIn({ email, password });
+      if (data?.user) {
+        navigate('/');
+        setError(null);
+      }
+    } catch (error) {
+      if (error instanceof AuthError) return setError(error); // supabase 에러
 
-    if (data?.user) {
-      navigate('/');
+      // 500 서버 에러, 런타임 에러
+      alert(ERROR_MESSAGES.DEFAULT);
       setError(null);
-    }
-    if (error) {
-      setError(error);
-      console.log('error state', error);
     }
   };
 
@@ -56,11 +60,7 @@ const Login = () => {
           />
         </div>
         <button className="w-full mt-4">Login</button>
-        {error && (
-          <p className="text-red-600 text-center pt-4">
-            아이디 또는 비밀번호를 확인해주세요 {JSON.stringify(error.message)}
-          </p>
-        )}
+        {error && <p className="text-red-600 text-center pt-4">아이디 또는 비밀번호를 확인해주세요</p>}
       </form>
     </div>
   );

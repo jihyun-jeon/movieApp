@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addComment, deleteComment, fetchComments } from '@/api/comment';
+import { ERROR_MESSAGES } from '@/contants';
 
 /**  영화 댓글 조회  */
 export const useGetCommentsQuery = (movieId: number) =>
@@ -18,7 +19,7 @@ export const useAddComment = (movieId: number) => {
       queryClient.invalidateQueries({ queryKey: CommentQueryKey.getMany(movieId) });
     },
     onError: (error) => {
-      console.error('error', error);
+      alert(ERROR_MESSAGES.DEFAULT);
     },
   });
 };
@@ -33,7 +34,7 @@ export const useDeleteComment = (movieId: number) => {
       queryClient.invalidateQueries({ queryKey: CommentQueryKey.getMany(movieId) });
     },
     onError: (error) => {
-      console.error('error', error);
+      alert(ERROR_MESSAGES.DEFAULT);
     },
   });
 };
