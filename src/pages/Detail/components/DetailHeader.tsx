@@ -2,13 +2,17 @@ import { useGetDetailMovieQuery } from '@/hooks/query/useMovie';
 import PosterImage from '@/components/PosterImage';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import { getImageUrl } from '@/utils/tmdbUtils';
+import clsx from 'clsx';
 
 const DetailHeader = ({ movieId }: { movieId: string }) => {
   const movieInfo = useGetDetailMovieQuery(movieId, { language: TMDB_LANGUAGE_KR });
 
   return (
     <header
-      className={`h-96 bg-cover ${movieInfo.data?.backdrop_path ? 'bg-center' : 'bg-gray-900'}`}
+      className={clsx('h-96 bg-cover', {
+        'bg-center': movieInfo.data?.backdrop_path,
+        'bg-gray-900': !movieInfo.data?.backdrop_path,
+      })}
       style={{
         backgroundImage: movieInfo.data?.backdrop_path
           ? `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)), url(${getImageUrl(movieInfo.data?.backdrop_path, 'w500')})`

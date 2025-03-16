@@ -3,6 +3,7 @@ import { useGetGenresQuery } from '@/hooks/query/useMovie';
 import { Genre } from '@/types/movie';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import { ToggleGroup, ToggleGroupItem } from '@/shadcn/components/ui/toggle-group';
+import clsx from 'clsx';
 
 interface ToggleButtonsProps {
   selectedGenres: string[];
@@ -28,9 +29,10 @@ const ToggleButtons: React.FC<ToggleButtonsProps> = ({ selectedGenres, setSelect
         <ToggleGroupItem
           value={`${data.id}`}
           key={data.id}
-          className={`${
-            selectedGenres?.includes(`${data.id}`) ? 'bg-white border-white' : 'bg-black border-[#84868d]'
-          } flex-none mr-1 py-2 px-4 rounded-lg transition-colors duration-200 border text-[#84868d]`}
+          className={clsx('flex-none mr-1 py-2 px-4 rounded-lg transition-colors duration-200 border text-[#84868d]', {
+            'bg-white border-white': selectedGenres?.includes(`${data.id}`),
+            'bg-black border-[#84868d]': !selectedGenres?.includes(`${data.id}`),
+          })}
         >
           {data.name}
         </ToggleGroupItem>
