@@ -12,7 +12,7 @@ export const fetchComments = async (movieId: number) => {
 export const addComment = async (commentData: Comment) => {
   const { data, error } = await supabase.from('Comments').insert([commentData]);
 
-  if (error) throw new Error(error.message);
+  if (error) throw error;
   return data;
 };
 
@@ -20,6 +20,6 @@ export const addComment = async (commentData: Comment) => {
 export const deleteComment = async ({ movieId, userId }: DeleteCommentParams) => {
   const { data, error } = await supabase.from('Comments').delete().eq('movie_id', movieId).eq('user_id', userId);
 
-  if (error) throw new Error(error.message);
+  if (error) throw error;
   return data;
 };

@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES } from '@/contants';
 import { useAuth } from '@/context/AuthContext';
 import { AuthError } from '@supabase/supabase-js';
 import { useState } from 'react';
@@ -14,15 +15,20 @@ const Signup = () => {
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    const { data, error } = await signUp({ email, password });
+    try {
+      const data = await signUp({ email, password });
 
-    if (data?.user) {
-      navigate('/login');
-      alert('회원가입 완료되었습니다.');
+      if (data?.user) {
+        navigate('/login');
+        alert('회원가입 완료되었습니다.');
+        setError(null);
+      }
+    } catch (error) {
+      if (error instanceof AuthError) return setError(error); // supabase 에러
+
+      // 500 서버 에러, 런타임 에러
+      alert(ERROR_MESSAGES.DEFAULT);
       setError(null);
-    }
-    if (error) {
-      setError(error);
     }
   };
 
