@@ -12,6 +12,7 @@ import DetailHeader from '@/pages/Detail/components/DetailHeader';
 import { useAuth } from '@/context/AuthContext';
 import SpinnerPortal from '@/components/Spinner';
 import Comments from '@/pages/Detail/components/Comments';
+import clsx from 'clsx';
 
 export default function Detail() {
   const [mode, setMode] = useState('info');
@@ -48,9 +49,13 @@ export default function Detail() {
               <ToggleGroupItem
                 value={data.value}
                 key={data.value}
-                className={`flex-none mr-1 py-2 px-4 rounded-lg transition-colors duration-200 border text-[#84868d] ${
-                  mode?.includes(data.value) ? 'bg-white border-white' : 'bg-black border-[#84868d]'
-                }`}
+                className={clsx(
+                  'flex-none mr-1 py-2 px-4 rounded-lg transition-colors duration-200 border text-[#84868d]',
+                  {
+                    'bg-white border-white': mode?.includes(data.value),
+                    'bg-black border-[#84868d]': !mode?.includes(data.value),
+                  },
+                )}
               >
                 {data.name}
               </ToggleGroupItem>
