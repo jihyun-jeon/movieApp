@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { CommentQueryKey, useAddComment, useDeleteComment, useGetCommentsQuery } from '@/hooks/query/useComment';
+import { useAddComment, useDeleteComment, useGetCommentsQuery } from '@/hooks/query/useComment';
 import { useAuth } from '@/context/AuthContext';
-import { useQueryClient } from '@tanstack/react-query';
 
 const Comments = ({ movieId }: { movieId: number }) => {
   const initialCommentState = { review: '', vote: 0 };
@@ -11,11 +10,10 @@ const Comments = ({ movieId }: { movieId: number }) => {
   const userId = getUser.session?.user.id;
   const userEmail = getUser.session?.user.email;
 
-  const queryClient = useQueryClient();
   const comments = useGetCommentsQuery(movieId);
 
-  const addCommnet = useAddComment();
-  const deleteCommnet = useDeleteComment();
+  const addCommnet = useAddComment(movieId);
+  const deleteCommnet = useDeleteComment(movieId);
 
   const handleSubmitComment = () => {
     if (!userId || !userEmail) {
@@ -31,15 +29,8 @@ const Comments = ({ movieId }: { movieId: number }) => {
       vote: comment.vote,
     };
 
-    addCommnet.mutate(commentData, {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries({ queryKey: CommentQueryKey.getMany(movieId) });
-        setComment(initialCommentState);
-      },
-      onError: (error) => {
-        console.error('error', error);
-      },
-    });
+    addCommnet.mutate(commentData);
+    setComment(initialCommentState);
   };
 
   const handleDeleteComment = () => {
@@ -49,14 +40,7 @@ const Comments = ({ movieId }: { movieId: number }) => {
     }
 
     const deleteData = { userId, movieId };
-    deleteCommnet.mutate(deleteData, {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries({ queryKey: CommentQueryKey.getMany(movieId) });
-      },
-      onError: (error) => {
-        console.error('error', error);
-      },
-    });
+    deleteCommnet.mutate(deleteData);
   };
 
   // 댓글 상태 업데이트
