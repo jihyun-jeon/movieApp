@@ -24,8 +24,8 @@ const Search = () => {
   }, [selectedGenres]);
 
   // 장르 필터 > 장르 api만 / 키워드 필터 > 키워드 api만 / 장르+키워드 필터 > 키워드 api만
-  const isGenreCall = selectedGenres.length > 0 && !searchKeyword;
-  const isKeywordCall = !!searchKeyword;
+  const isGenreFiltered = selectedGenres.length > 0 && !searchKeyword;
+  const isKeywordFiltered = !!searchKeyword;
 
   // 장르 필터
   const genreMovies = useGenreSearchMoviesQuery(
@@ -34,7 +34,7 @@ const Search = () => {
       page: 1,
       with_genres: selectedGenresToString,
     },
-    isGenreCall && !!selectedGenresToString, // 빈 string이면 api 호출X
+    isGenreFiltered && !!selectedGenresToString, // 빈 string이면 api 호출X
   );
 
   // 키워드 필터
@@ -44,10 +44,10 @@ const Search = () => {
       page: 1,
       query: searchKeyword || '',
     },
-    isKeywordCall,
+    isKeywordFiltered,
   );
 
-  const renderMovies = useMemo(() => {
+  const filteredMovieList = (() => {
     const genreData = genreMovies.data?.results || [];
     const keywordData = keywordMovies.data?.results || [];
 
@@ -59,14 +59,14 @@ const Search = () => {
     } else if (genreData.length > 0) {
       return genreData; // 장르 필터만
     }
-  }, [genreMovies.data?.results, keywordMovies.data?.results, selectedGenres]);
+  })();
 
   return (
     <div className="px-36">
       Search
       <ToggleButtons selectedGenres={selectedGenres} setSelectedGenres={setSelectedGenres} />
       <ul className="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] gap-5">
-        {renderMovies?.map((movie: Movie) => (
+        {filteredMovieList?.map((movie: Movie) => (
           <li
             key={movie.id}
             onClick={() => {
