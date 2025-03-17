@@ -3,8 +3,7 @@ import PosterImage from '@/components/PosterImage';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import useNavigateToContents from '@/hooks/usePathParams';
 import { Movie } from '@/types/movie';
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import Carousel from '@/components/Carousel';
 
 const Home = () => {
   const popularMovies = usePopularMoviesQuery({ language: TMDB_LANGUAGE_KR, page: 1 });
@@ -18,63 +17,47 @@ const Home = () => {
       {popularMovies.isLoading ? (
         <div>Loading...</div>
       ) : (
-        <Swiper
-          modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-          spaceBetween={15}
-          slidesPerView={3}
-          slidesPerGroup={3}
-          pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
-          autoplay={{
-            delay: 2000,
-            disableOnInteraction: false, // 사용자가 슬라이드를 조작해도 자동 재생 유지
-          }}
-          onSwiper={(swiper) => console.log('swiper', swiper)}
-          onSlideChange={() => console.log('slide change')}
-        >
-          {popularMovies.data?.results.map((movie: Movie) => (
-            <SwiperSlide
-              key={movie.id}
-              onClick={() => {
-                updatePathParam('.', movie.id);
-              }}
-            >
-              <PosterImage posterPath={movie?.poster_path} size="w500" />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <div className="mb-10">
+          <h1 className="text-2xl font-bold mb-4">인기 영화</h1>
+          <Carousel autoPlay={true} showIndicators={true} showArrows={true} itemsPerPage={1} interval={3000}>
+            {popularMovies.data?.results.slice(0, 5).map((movie: Movie) => (
+              <div
+                key={movie.id}
+                className="relative  w-full  h-[400px] cursor-pointer"
+                onClick={() => updatePathParam('.', movie.id)}
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent z-10"></div>
+                <img
+                  src={`https://image.tmdb.org/t/p/original${movie.backdrop_path || movie.poster_path}`}
+                  alt={movie.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-10 left-10 z-20">
+                  <h2 className="text-3xl font-bold mb-2">{movie.title}</h2>
+                  <p className="text-gray-300 line-clamp-2 max-w-2xl">{movie.overview}</p>
+                </div>
+              </div>
+            ))}
+          </Carousel>
+        </div>
       )}
 
       {/* Day Carousel */}
       {trandingMovies.isLoading ? (
         <div>Loading...</div>
       ) : (
-        <>
-          <h1>오늘의 인기작 TOP 20</h1>
-          <Swiper
-            modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-            spaceBetween={15}
-            slidesPerView={5}
-            slidesPerGroup={5}
-            navigation
-            loop
-            scrollbar={{ draggable: true }}
-            onSwiper={(swiper) => console.log('swiper', swiper)}
-            onSlideChange={() => console.log('slide change')}
-          >
-            {trandingMovies.data?.results.map((movie: Movie, idx) => (
-              <SwiperSlide
-                key={movie.id}
-                onClick={() => {
-                  updatePathParam('.', movie.id);
-                }}
-              >
-                <h1>{idx + 1}</h1>
-                <PosterImage posterPath={movie?.poster_path} size="w342" />
-              </SwiperSlide>
+        <div className="mt-8">
+          <h1 className="text-2xl font-bold mb-4">오늘의 인기작 TOP 20</h1>
+          <Carousel autoPlay={false} showIndicators={false} showArrows={true} itemsPerPage={5}>
+            {trandingMovies.data?.results.map((movie: Movie) => (
+              <div key={movie.id} className="w-1/5 px-2 cursor-pointer" onClick={() => updatePathParam('.', movie.id)}>
+                <div className="relative">
+                  <PosterImage posterPath={movie?.poster_path} size="w342" />
+                </div>
+              </div>
             ))}
-          </Swiper>
-        </>
+          </Carousel>
+        </div>
       )}
     </div>
   );
