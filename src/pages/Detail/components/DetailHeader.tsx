@@ -3,9 +3,38 @@ import PosterImage from '@/components/PosterImage';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import { getImageUrl } from '@/utils/tmdbUtils';
 import clsx from 'clsx';
+import { useAuth } from '@/context/AuthContext';
+import { useAddFavoriteQuery, useGetFavoriteByMovieQuery, useDeleteFavoriteQuery } from '@/hooks/query/useFavorite';
 
-const DetailHeader = ({ movieId }: { movieId: string }) => {
+const DetailHeader = ({ movieId }: { movieId: number }) => {
   const movieInfo = useGetDetailMovieQuery(movieId, { language: TMDB_LANGUAGE_KR });
+
+  const getUser = useAuth();
+  const userId = getUser.session?.user.id;
+
+  const addFavorite = useAddFavoriteQuery();
+  const deleteCommnet = useDeleteFavoriteQuery();
+
+  const { data: favorites } = useGetFavoriteByMovieQuery(Number(movieId!), userId!);
+  const isFavoriteAdded = !!favorites?.length;
+
+  const handleAddFavorite = () => {
+    const movieData = movieInfo.data;
+    if (!movieData?.title || !movieData?.poster_path || !userId) {
+      return;
+    }
+
+    if (isFavoriteAdded) {
+      deleteCommnet.mutate({ userId, movieId });
+    } else {
+      addFavorite.mutate({
+        movie_id: movieId,
+        user_id: userId,
+        img_url: movieData.poster_path,
+        title: movieData.title,
+      });
+    }
+  };
 
   return (
     <header
@@ -33,10 +62,20 @@ const DetailHeader = ({ movieId }: { movieId: string }) => {
               <div className="flex gap-2">
                 <button
                   type="button"
-                  className="w-[70px] h-[70px] flex flex-col justify-center bg-white-10 hover:bg-white/30"
+                  onClick={handleAddFavorite}
+                  className={'w-[70px] h-[70px] flex flex-col justify-center hover:bg-white/30'}
                 >
-                  <span>❤️</span>
-                  <span>찜</span>
+                  {isFavoriteAdded ? (
+                    <>
+                      <span>✔️</span>
+                      <span>추가됨</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>+</span>
+                      <span>찜하기</span>
+                    </>
+                  )}
                 </button>
                 <button
                   type="button"
