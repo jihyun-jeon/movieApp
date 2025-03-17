@@ -34,6 +34,14 @@ const Layout = () => {
                   <button type="button" onClick={onLogout}>
                     로그아웃
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigate('/favorite');
+                    }}
+                  >
+                    찜목록
+                  </button>
                 </>
               ) : (
                 <>

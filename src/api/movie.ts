@@ -94,7 +94,7 @@ export const useGetSimilarMovie = (movieId: string, queryParams: baseSearchParam
 };
 
 // 영화 세부정보
-export const useGetDateilMovie = (movieId: string, queryParams: baseSearchParam) => {
+export const useGetDateilMovie = (movieId: number, queryParams: baseSearchParam) => {
   return useQuery({
     queryFn: () => {
       return axiosInstance<MovieDetail>({
@@ -115,5 +115,5 @@ export const MoviesQuery = {
     getCategory,
     JSON.stringify(queryParams),
   ],
-  getOne: (id: string) => [...MoviesQuery.all, 'getOne', id],
+  getOne: (id: number) => [...MoviesQuery.all, 'getOne', id],
 };

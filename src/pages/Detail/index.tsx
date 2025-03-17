@@ -31,7 +31,7 @@ export default function Detail() {
   return (
     <>
       {loading && <SpinnerPortal />}
-      <DetailHeader movieId={movieId!} />
+      <DetailHeader movieId={Number(movieId!)} />
       <main className="px-36">
         {/* 토글버튼 */}
         <div className="pt-3 flex justify-center">

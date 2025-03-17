@@ -1,10 +1,42 @@
+import { useAddFavorite } from '@/api/favorite';
 import { useGetDateilMovie } from '@/api/movie';
 import PosterImage from '@/components/PosterImage';
 import { TMDB_LANGUAGE_KR } from '@/contants';
+import { useAuth } from '@/context/AuthContext';
 import { getImageUrl } from '@/utils/tmdbUtils';
 
-const DetailHeader = ({ movieId }: { movieId: string }) => {
+const DetailHeader = ({ movieId }: { movieId: number }) => {
   const movieInfo = useGetDateilMovie(movieId, { language: TMDB_LANGUAGE_KR });
+
+  const getUser = useAuth();
+  const userId = getUser.session?.user.id;
+
+  const addFavorite = useAddFavorite();
+
+  const handleAddFavorite = () => {
+    if (!movieInfo.data || !movieInfo.data.title || !movieInfo.data.poster_path || !userId) {
+      console.log('here');
+      console.error('movieInfo data or userId undefined');
+      return;
+    }
+
+    const favoriteData = {
+      movie_id: movieId,
+      user_id: userId,
+      img_url: movieInfo.data.poster_path,
+      title: movieInfo.data.title,
+    };
+
+    addFavorite.mutate(favoriteData, {
+      onSuccess: (data) => {
+        alert('찜 추가 완료!');
+        console.log('success', data);
+      },
+      onError: (error) => {
+        console.error('error', error);
+      },
+    });
+  };
 
   return (
     <header
@@ -31,8 +63,10 @@ const DetailHeader = ({ movieId }: { movieId: string }) => {
                   type="button"
                   className="w-[70px] h-[70px] flex flex-col justify-center bg-white-10 hover:bg-white/30"
                 >
-                  <span>❤️</span>
-                  <span>찜</span>
+                  <button type="button" onClick={handleAddFavorite}>
+                    <div>❤️</div>
+                    <div> 찜</div>
+                  </button>
                 </button>
                 <button
                   type="button"
