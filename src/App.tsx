@@ -7,6 +7,7 @@ import Search from '@/pages/Search';
 import Signup from '@/pages/Signup';
 import Login from '@/pages/Login';
 import { AuthContextProvider } from '@/context/AuthContext';
+import Favorite from '@/pages/Favorite';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: 'movie', element: <Home /> },
       { path: 'movie/:movieId', element: <Detail /> },
       { path: 'search', element: <Search /> },
+      { path: 'favorite', element: <Favorite /> },
       { path: 'login', element: <Login /> },
       { path: 'signup', element: <Signup /> },
     ],
