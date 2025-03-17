@@ -60,7 +60,7 @@ export const fetchKeywordFilteredMovies = async (queryParams: keywordSearchParam
 };
 
 /** 비슷한 영화 요청 */
-export const fetchSimilarMovies = async (movieId: string, queryParams: baseSearchParam) => {
+export const fetchSimilarMovies = async (movieId: number, queryParams: baseSearchParam) => {
   const { data } = await axiosInstance<MovieResponse>({
     url: `/movie/${movieId}/similar`,
     method: 'get',
@@ -70,7 +70,7 @@ export const fetchSimilarMovies = async (movieId: string, queryParams: baseSearc
 };
 
 /** 영화 세부정보 요청 */
-export const fetchMovieDetail = async (movieId: string, queryParams: baseSearchParam) =>
+export const fetchMovieDetail = async (movieId: number, queryParams: baseSearchParam) =>
   axiosInstance<MovieDetail>({
     url: `/movie/${movieId}`,
     method: 'get',
