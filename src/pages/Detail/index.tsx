@@ -16,7 +16,8 @@ import clsx from 'clsx';
 
 export default function Detail() {
   const [mode, setMode] = useState('info');
-  const { movieId } = useParams();
+  const { movieId: movieIdParam } = useParams();
+  const movieId = Number(movieIdParam);
 
   const credit = useGetCreditQuery(movieId!, { language: TMDB_LANGUAGE_KR });
   const similar = useGetSimilarMovieQuery(movieId!, { language: TMDB_LANGUAGE_KR });
@@ -84,7 +85,7 @@ export default function Detail() {
             </div>
             <div className="py-5">
               <h2 className="font-semibold">사용자 리뷰</h2>
-              <Comments movieId={Number(movieId!)} />
+              <Comments movieId={movieId!} />
             </div>
           </>
         )}

@@ -3,7 +3,7 @@ import { baseSearchParam } from '@/types/movie';
 import { fetchCredit } from '@/api/actor';
 
 /** 영화 크레딧 정보 요청 */
-export const useGetCreditQuery = (movieId: string, queryParams: baseSearchParam) =>
+export const useGetCreditQuery = (movieId: number, queryParams: baseSearchParam) =>
   useQuery({
     queryFn: () => fetchCredit(movieId, queryParams),
     queryKey: ActorQueryKeys.getMany('credits', queryParams),

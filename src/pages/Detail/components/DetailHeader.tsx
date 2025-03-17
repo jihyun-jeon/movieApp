@@ -15,7 +15,7 @@ const DetailHeader = ({ movieId }: { movieId: number }) => {
   const addFavorite = useAddFavoriteQuery();
   const deleteCommnet = useDeleteFavoriteQuery();
 
-  const { data: favorites } = useGetFavoriteByMovieQuery(Number(movieId!), userId!);
+  const { data: favorites } = useGetFavoriteByMovieQuery(movieId!, userId!);
   const isFavoriteAdded = !!favorites?.length;
 
   const handleAddFavorite = () => {
