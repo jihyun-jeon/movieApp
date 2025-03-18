@@ -1,26 +1,24 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGenreSearchMoviesQuery, useKeywordSearchMoviesQuery } from '@/hooks/query/useMovie';
 import { Movie } from '@/types/movie';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import ToggleButtons from '@/pages/Search/components/ToggleButtons';
 import useUrlParams from '@/hooks/useUrlParams';
-import useNavigateToContents from '@/hooks/usePathParams';
+import usePathParams from '@/hooks/usePathParams';
 import PosterImage from '@/components/PosterImage';
 
 const Search = () => {
-  const { getSearchParam, updateSearchParams } = useUrlParams();
-  const searchKeyword = getSearchParam('query');
-  const searchGenre = getSearchParam('with_genres');
+  const { useStringQueryState } = useUrlParams();
+  const [searchKeyword] = useStringQueryState('query');
+  const [genreParam, setGenreParam] = useStringQueryState('with_genres');
 
-  const { updatePathParam } = useNavigateToContents();
+  const { updatePathParam } = usePathParams();
 
-  const initialGenres = searchGenre?.split(',') || [];
+  const initialGenres = genreParam ? genreParam.split(',') : [];
   const [selectedGenres, setSelectedGenres] = useState<string[]>(initialGenres);
 
-  const selectedGenresToString = selectedGenres.join(',');
-
   useEffect(() => {
-    updateSearchParams({ with_genres: selectedGenresToString });
+    setGenreParam(selectedGenres.join(','));
   }, [selectedGenres]);
 
   // 장르 필터 > 장르 api만 / 키워드 필터 > 키워드 api만 / 장르+키워드 필터 > 키워드 api만
@@ -32,9 +30,9 @@ const Search = () => {
     {
       language: TMDB_LANGUAGE_KR,
       page: 1,
-      with_genres: selectedGenresToString,
+      with_genres: genreParam,
     },
-    isGenreFiltered && !!selectedGenresToString, // 빈 string이면 api 호출X
+    isGenreFiltered && !!genreParam, // 빈 string이면 api 호출X
   );
 
   // 키워드 필터
