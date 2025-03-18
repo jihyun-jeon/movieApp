@@ -3,8 +3,7 @@ import { TMDB_LANGUAGE_KR } from '@/contants';
 import { getImageUrl } from '@/utils/tmdbUtils';
 import { ToggleGroup, ToggleGroupItem } from '@radix-ui/react-toggle-group';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import useNavigateToContents from '@/hooks/usePathParams';
+import usePathParams from '@/hooks/usePathParams';
 import PosterImage from '@/components/PosterImage';
 import '@/styles/custom.css';
 import { useGetCreditQuery } from '@/hooks/query/useActor';
@@ -16,13 +15,11 @@ import clsx from 'clsx';
 
 export default function Detail() {
   const [mode, setMode] = useState('info');
-  const { movieId: movieIdParam } = useParams();
-  const movieId = Number(movieIdParam);
+  const { useNumberPathState } = usePathParams();
+  const [movieId, setPathParam] = useNumberPathState('movieId');
 
-  const credit = useGetCreditQuery(movieId!, { language: TMDB_LANGUAGE_KR });
-  const similar = useGetSimilarMovieQuery(movieId!, { language: TMDB_LANGUAGE_KR });
-
-  const { updatePathParam } = useNavigateToContents();
+  const credit = useGetCreditQuery(movieId, { language: TMDB_LANGUAGE_KR });
+  const similar = useGetSimilarMovieQuery(movieId, { language: TMDB_LANGUAGE_KR });
 
   const { loading } = useAuth();
 
@@ -33,7 +30,7 @@ export default function Detail() {
   return (
     <>
       {loading && <SpinnerPortal />}
-      <DetailHeader movieId={movieId!} />
+      <DetailHeader movieId={movieId} />
       <main className="px-36">
         {/* 토글버튼 */}
         <div className="pt-3 flex justify-center">
@@ -85,7 +82,7 @@ export default function Detail() {
             </div>
             <div className="py-5">
               <h2 className="font-semibold">사용자 리뷰</h2>
-              <Comments movieId={movieId!} />
+              <Comments movieId={movieId} />
             </div>
           </>
         )}
@@ -100,7 +97,7 @@ export default function Detail() {
                   key={movie.id}
                   className="w-52  flex flex-col"
                   onClick={() => {
-                    updatePathParam('/movie', movie.id);
+                    setPathParam(movie.id);
                   }}
                 >
                   <PosterImage posterPath={movie.poster_path} size="w500" />
