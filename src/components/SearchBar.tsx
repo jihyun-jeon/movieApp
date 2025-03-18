@@ -7,10 +7,10 @@ const SearchBar = () => {
   const { pathname } = useLocation();
   const isSearchPage = pathname.includes('search');
 
-  const { getSearchParam, updateSearchParams } = useUrlParams();
-  const searchKeyword = getSearchParam('query');
+  const { useStringQueryState } = useUrlParams();
+  const [queryParam, setQueryParam] = useStringQueryState('query');
 
-  const [keyword, setKeyword] = useState(searchKeyword || '');
+  const [keyword, setKeyword] = useState(queryParam);
   const debouncedKeyword = useDebounce(keyword, 500);
 
   const handleChange = (e: { target: { value: SetStateAction<string> } }) => {
@@ -18,7 +18,7 @@ const SearchBar = () => {
   };
 
   useEffect(() => {
-    updateSearchParams({ query: debouncedKeyword });
+    setQueryParam(debouncedKeyword);
   }, [debouncedKeyword]);
 
   return (
