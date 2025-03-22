@@ -10,7 +10,7 @@ export const useGetCommentsQuery = (movieId: number) =>
   });
 
 /** 영화 댓글 추가 */
-export const useAddComment = (movieId: number) => {
+export const useAddCommentMutation = (movieId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -25,7 +25,7 @@ export const useAddComment = (movieId: number) => {
 };
 
 /**  영화 댓글 삭제  */
-export const useDeleteComment = (movieId: number) => {
+export const useDeleteCommentMutation = (movieId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({

@@ -17,7 +17,7 @@ export const useGetFavoriteByMovieQuery = (movieId: number, userId: string) =>
   });
 
 /** 즐겨찾기 추가 */
-export const useAddFavoriteQuery = () => {
+export const useAddFavoriteMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -33,7 +33,7 @@ export const useAddFavoriteQuery = () => {
 };
 
 /** 즐겨찾기 삭제  */
-export const useDeleteFavoriteQuery = () => {
+export const useDeleteFavoriteMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
