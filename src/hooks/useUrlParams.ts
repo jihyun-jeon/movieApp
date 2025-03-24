@@ -22,7 +22,33 @@ const useUrlParams = () => {
     });
   };
 
-  return { getSearchParam, updateSearchParams };
+  /** 문자열 타입의 URL 쿼리 파라미터를 상태처럼 사용하는 훅 */
+  const useStringQueryState = (key: string, defaultValue: string = '') => {
+    const currentValue = getSearchParam(key) || defaultValue; // 쿼리 파라미터 조회(문자로)
+
+    const setValue = (newValue: string) => {
+      updateSearchParams({ [key]: newValue });
+    };
+
+    return [currentValue, setValue] as const;
+  };
+
+  /** 숫자 타입의 URL 쿼리 파라미터를 상태처럼 사용하는 훅 */
+  const useNumberQueryState = (key: string, defaultValue: number = 0) => {
+    const paramValue = getSearchParam(key);
+    const currentValue = paramValue ? Number(paramValue) : defaultValue; // 쿼리 파라미터 조회(숫자로)
+
+    const setValue = (newValue: number) => {
+      updateSearchParams({ [key]: String(newValue) });
+    };
+
+    return [currentValue, setValue] as const;
+  };
+
+  return {
+    useStringQueryState,
+    useNumberQueryState,
+  };
 };
 
 export default useUrlParams;

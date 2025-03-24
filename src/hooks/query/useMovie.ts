@@ -48,14 +48,14 @@ export const useKeywordSearchMoviesQuery = (queryParams: keywordSearchParam, isF
   });
 
 /** 비슷한 영화 요청 */
-export const useGetSimilarMovieQuery = (movieId: string, queryParams: baseSearchParam) =>
+export const useGetSimilarMovieQuery = (movieId: number, queryParams: baseSearchParam) =>
   useQuery({
     queryFn: () => fetchSimilarMovies(movieId, queryParams),
     queryKey: MoviesQuery.getMany('similarMovie', movieId),
   });
 
 /** 영화 세부정보 요청 */
-export const useGetDetailMovieQuery = (movieId: string, queryParams: baseSearchParam) =>
+export const useGetDetailMovieQuery = (movieId: number, queryParams: baseSearchParam) =>
   useQuery({
     queryFn: () => fetchMovieDetail(movieId, queryParams),
     queryKey: MoviesQuery.getOne(movieId),
@@ -69,5 +69,5 @@ export const MoviesQuery = {
     getCategory,
     JSON.stringify(queryParams),
   ],
-  getOne: (id: string) => [...MoviesQuery.all, 'getOne', id],
+  getOne: (id: number) => [...MoviesQuery.all, 'getOne', id],
 };
