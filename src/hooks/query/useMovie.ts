@@ -8,7 +8,7 @@ import {
   fetchSimilarMovies,
   fetchMovieDetail,
 } from '@/api/movie';
-import { baseSearchParam, genreSearchParam, keywordSearchParam } from '@/types/movie';
+import { baseSearchParam, genreSearchParam, keywordSearchParam } from '@/types/movieType';
 
 /** 인기 영화 요청 */
 export const usePopularMoviesQuery = (queryParams: baseSearchParam) =>

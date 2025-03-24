@@ -1,5 +1,5 @@
 import axiosInstance from '@/api/axios';
-import { baseSearchParam } from '@/types/movie';
+import { baseSearchParam } from '@/types/movieType';
 import { MovieCredit } from '@/types/actor';
 
 /** 영화 크레딧 정보 요청 */

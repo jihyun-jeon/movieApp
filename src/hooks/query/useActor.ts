@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { baseSearchParam } from '@/types/movie';
+import { baseSearchParam } from '@/types/movieType';
 import { fetchCredit } from '@/api/actor';
 
 /** 영화 크레딧 정보 요청 */

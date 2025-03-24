@@ -6,7 +6,7 @@ import {
   keywordSearchParam,
   MovieDetail,
   MovieResponse,
-} from '@/types/movie';
+} from '@/types/movieType';
 
 /** 인기 영화 요청 */
 export const fetchPopularMovies = async (queryParams: baseSearchParam) => {

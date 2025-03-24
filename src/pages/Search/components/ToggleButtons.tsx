@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGetGenresQuery } from '@/hooks/query/useMovie';
-import { Genre } from '@/types/movie';
+import { Genre } from '@/types/movieType';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import { ToggleGroup, ToggleGroupItem } from '@/shadcn/components/ui/toggle-group';
 import clsx from 'clsx';

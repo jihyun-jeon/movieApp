@@ -2,7 +2,7 @@ import { usePopularMoviesQuery, useTrendingMoviesQuery } from '@/hooks/query/use
 import PosterImage from '@/components/PosterImage';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import useNavigateToContents from '@/hooks/usePathParams';
-import { Movie } from '@/types/movie';
+import { Movie } from '@/types/movieType';
 import Carousel from '@/components/Carousel';
 
 const Home = () => {
