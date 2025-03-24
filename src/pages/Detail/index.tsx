@@ -8,8 +8,6 @@ import PosterImage from '@/components/PosterImage';
 import '@/styles/custom.css';
 import { useGetCreditQuery } from '@/hooks/query/useActor';
 import DetailHeader from '@/pages/Detail/components/DetailHeader';
-import { useAuth } from '@/context/AuthContext';
-import SpinnerPortal from '@/components/Spinner';
 import Comments from '@/pages/Detail/components/Comments';
 import clsx from 'clsx';
 
@@ -21,15 +19,12 @@ export default function Detail() {
   const credit = useGetCreditQuery(movieId, { language: TMDB_LANGUAGE_KR });
   const similar = useGetSimilarMovieQuery(movieId, { language: TMDB_LANGUAGE_KR });
 
-  const { loading } = useAuth();
-
   useEffect(() => {
     setMode('info');
   }, [movieId]);
 
   return (
     <>
-      {loading && <SpinnerPortal />}
       <DetailHeader movieId={movieId} />
       <main className="px-36">
         {/* 토글버튼 */}
