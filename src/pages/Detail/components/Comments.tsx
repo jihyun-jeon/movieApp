@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAddComment, useDeleteComment, useGetCommentsQuery } from '@/hooks/query/useComment';
+import { useAddCommentMutation, useDeleteCommentMutation, useGetCommentsQuery } from '@/hooks/query/useComment';
 import { useAuth } from '@/context/AuthContext';
 
 const Comments = ({ movieId }: { movieId: number }) => {
@@ -12,8 +12,8 @@ const Comments = ({ movieId }: { movieId: number }) => {
 
   const comments = useGetCommentsQuery(movieId);
 
-  const addCommnet = useAddComment(movieId);
-  const deleteCommnet = useDeleteComment(movieId);
+  const addCommnet = useAddCommentMutation(movieId);
+  const deleteCommnet = useDeleteCommentMutation(movieId);
 
   const handleSubmitComment = () => {
     if (!userId || !userEmail) {
@@ -29,7 +29,14 @@ const Comments = ({ movieId }: { movieId: number }) => {
       vote: comment.vote,
     };
 
-    addCommnet.mutate(commentData);
+    addCommnet.mutate(commentData, {
+      onSuccess: (data, variables, context) => {
+        // 추가적인 성공 처리
+      },
+      onError: (error, variables, context) => {
+        // 추가적인 에러 처리
+      },
+    });
     setComment(initialCommentState);
   };
 
@@ -40,7 +47,14 @@ const Comments = ({ movieId }: { movieId: number }) => {
     }
 
     const deleteData = { userId, movieId };
-    deleteCommnet.mutate(deleteData);
+    deleteCommnet.mutate(deleteData, {
+      onSuccess: (data) => {
+        // 추가적인 성공 처리
+      },
+      onError: (error) => {
+        // 추가적인 에러 처리
+      },
+    });
   };
 
   // 댓글 상태 업데이트
