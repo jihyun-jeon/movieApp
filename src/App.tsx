@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import Home from '@/pages/Home';
 import Detail from '@/pages/Detail';
-import NotFound from '@/pages/NotFound';
+import NotFound from '@/pages/Error/NotFound';
 import Search from '@/pages/Search';
 import Signup from '@/pages/Signup';
 import Login from '@/pages/Login';
 import { AuthContextProvider, useAuth } from '@/context/AuthContext';
 import Favorite from '@/pages/Favorite';
+import SpinnerPortal from '@/components/Spinner';
+import AuthErrorBoundary from '@/context/AuthErrorBoundary';
+import ErrorPage from '@/pages/Error';
+import CommonError from '@/interceptor/CommonError';
 
 const GuardRouter = ({ children }: { children: React.ReactNode }) => {
   const { session } = useAuth();
@@ -18,7 +22,12 @@ const GuardRouter = ({ children }: { children: React.ReactNode }) => {
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <>
+        <CommonError />
+        <Layout />
+      </>
+    ),
     children: [
       { index: true, element: <Navigate to="/movie" replace /> },
       { path: 'movie', element: <Home /> },
@@ -41,6 +50,7 @@ const router = createBrowserRouter([
           </GuardRouter>
         ),
       },
+      { path: 'error', element: <ErrorPage /> },
     ],
   },
   { path: '*', element: <NotFound /> },
@@ -48,9 +58,13 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <AuthContextProvider>
-      <RouterProvider router={router} />
-    </AuthContextProvider>
+    <AuthErrorBoundary>
+      <Suspense fallback={<SpinnerPortal />}>
+        <AuthContextProvider>
+          <RouterProvider router={router} />
+        </AuthContextProvider>
+      </Suspense>
+    </AuthErrorBoundary>
   );
 }
 
