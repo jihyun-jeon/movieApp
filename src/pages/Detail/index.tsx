@@ -14,8 +14,7 @@ import Similar from '@/pages/Detail/components/Similar';
 
 export default function Detail() {
   const [mode, setMode] = useState('info');
-  const { useNumberPathState } = usePathParams();
-  const [movieId, setPathParam] = useNumberPathState('movieId');
+  const [movieId, setPathParam] = usePathParams('movieId', 0);
 
   const credit = useGetCreditQuery(movieId, { language: TMDB_LANGUAGE_KR });
 
