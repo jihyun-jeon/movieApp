@@ -4,15 +4,14 @@ import { Movie } from '@/types/movieType';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import ToggleButtons from '@/pages/Search/components/ToggleButtons';
 import useUrlParams from '@/hooks/routing/useQueryParams';
-import usePathParams from '@/hooks/routing/usePathParams';
 import PosterImage from '@/components/PosterImage';
+import useNavigateTo from '@/hooks/routing/useUrlNavigation';
 
 const Search = () => {
   const { useStringQueryState } = useUrlParams();
   const [searchKeyword] = useStringQueryState('query');
   const [genreParam, setGenreParam] = useStringQueryState('with_genres');
-
-  const { updatePathParam } = usePathParams();
+  const goTo = useNavigateTo();
 
   const initialGenres = genreParam ? genreParam.split(',') : [];
   const [selectedGenres, setSelectedGenres] = useState<string[]>(initialGenres);
@@ -68,7 +67,7 @@ const Search = () => {
           <li
             key={movie.id}
             onClick={() => {
-              updatePathParam('/movie', movie.id);
+              goTo('/movie/:movieId', { movieId: movie.id });
             }}
             className="w-full h-auto rounded-lg"
           >

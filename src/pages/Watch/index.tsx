@@ -1,18 +1,24 @@
 import usePathParams from '@/hooks/routing/usePathParams';
 import useUrlParams from '@/hooks/routing/useQueryParams';
+import useNavigateTo from '@/hooks/routing/useUrlNavigation';
 import { X } from 'lucide-react';
 
 const Watch = () => {
-  const { useNumberPathState, updatePathParam } = usePathParams();
   const { useStringQueryState } = useUrlParams();
+  const goTo = useNavigateTo();
 
-  const [movieId, setMovieId] = useNumberPathState('movieId');
+  const [movieId, setMovieId] = usePathParams('movieId', 0);
   const [videoId, setVideoId] = useStringQueryState('play');
 
   return (
     <div className="fixed inset-0 w-screen h-screen bg-black px-6">
       <div className="h-12 bg-black flex items-end">
-        <button type="button" onClick={() => updatePathParam('/movie', movieId)}>
+        <button
+          type="button"
+          onClick={() => {
+            goTo('/movie/:movieId', { movieId });
+          }}
+        >
           <X className="w-7 h-7 text-gray-100" />
         </button>
       </div>

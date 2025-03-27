@@ -10,12 +10,11 @@ import {
   useDeleteFavoriteMutation,
 } from '@/hooks/query/useFavorite';
 import { useGetVideoQuery } from '@/hooks/query/useVideo';
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import useNavigateTo from '@/hooks/routing/useUrlNavigation';
 
 const DetailHeader = ({ movieId }: { movieId: number }) => {
   const movieInfo = useGetDetailMovieQuery(movieId, { language: TMDB_LANGUAGE_KR });
-
-  const navigate = useNavigate();
+  const goTo = useNavigateTo();
 
   const getUser = useAuth();
   const userId = getUser.session?.user.id;
@@ -107,11 +106,7 @@ const DetailHeader = ({ movieId }: { movieId: number }) => {
               <button
                 type="button"
                 onClick={() => {
-                  // [TODO] 훅으로 변경
-                  navigate({
-                    pathname: `/watch/${movieId}`,
-                    search: `?${createSearchParams({ play: videoId })}`,
-                  });
+                  goTo('/watch/:movieId', { movieId }, { play: videoId });
                 }}
               >
                 ▶️ 미리보기
