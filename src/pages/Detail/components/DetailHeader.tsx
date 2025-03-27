@@ -58,7 +58,7 @@ const DetailHeader = ({ movieId }: { movieId: number }) => {
       }}
     >
       <div className="flex px-36 w-full h-full p-6">
-        <div className="h-full min-w-[224px] mr-10">
+        <div className="relative h-full min-w-[224px] mr-10">
           <PosterImage posterPath={movieInfo.data?.poster_path} size="w500" />
         </div>
 

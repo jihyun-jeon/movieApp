@@ -72,7 +72,7 @@ const Search = () => {
             }}
             className="w-full h-auto rounded-lg"
           >
-            <div className="w-full aspect-[3/4] rounded-lg">
+            <div className="relative w-full aspect-[3/4] rounded-lg">
               <PosterImage posterPath={movie?.poster_path} size="w500" />
             </div>
             {movie.title}
