@@ -1,5 +1,5 @@
-import usePathParams from '@/hooks/usePathParams';
-import useUrlParams from '@/hooks/useUrlParams';
+import usePathParams from '@/hooks/routing/usePathParams';
+import useUrlParams from '@/hooks/routing/useQueryParams';
 import { X } from 'lucide-react';
 
 const Watch = () => {

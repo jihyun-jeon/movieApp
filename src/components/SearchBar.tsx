@@ -1,7 +1,7 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import useDebounce from '@/hooks/useDebounce';
-import useUrlParams from '@/hooks/useUrlParams';
+import useUrlParams from '@/hooks/routing/useQueryParams';
 
 const SearchBar = () => {
   const { pathname } = useLocation();

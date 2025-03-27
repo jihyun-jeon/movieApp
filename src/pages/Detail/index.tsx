@@ -2,7 +2,7 @@ import { TMDB_LANGUAGE_KR } from '@/contants';
 import { getImageUrl } from '@/utils/tmdbUtils';
 import { ToggleGroup, ToggleGroupItem } from '@radix-ui/react-toggle-group';
 import { useEffect, useState } from 'react';
-import usePathParams from '@/hooks/usePathParams';
+import usePathParams from '@/hooks/routing/usePathParams';
 import '@/styles/custom.css';
 import { useGetCreditQuery } from '@/hooks/query/useActor';
 import DetailHeader from '@/pages/Detail/components/DetailHeader';

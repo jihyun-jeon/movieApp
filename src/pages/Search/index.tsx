@@ -3,8 +3,8 @@ import { useGenreSearchMoviesQuery, useKeywordSearchMoviesQuery } from '@/hooks/
 import { Movie } from '@/types/movieType';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import ToggleButtons from '@/pages/Search/components/ToggleButtons';
-import useUrlParams from '@/hooks/useUrlParams';
-import usePathParams from '@/hooks/usePathParams';
+import useUrlParams from '@/hooks/routing/useQueryParams';
+import usePathParams from '@/hooks/routing/usePathParams';
 import PosterImage from '@/components/PosterImage';
 
 const Search = () => {

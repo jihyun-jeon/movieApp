@@ -1,7 +1,7 @@
 import { useTrendingMoviesQuery } from '@/hooks/query/useMovie';
 import PosterImage from '@/components/PosterImage';
 import { TMDB_LANGUAGE_KR } from '@/contants';
-import useNavigateToContents from '@/hooks/usePathParams';
+import useNavigateToContents from '@/hooks/routing/usePathParams';
 import { Movie } from '@/types/movieType';
 import Carousel from '@/components/Carousel';
 
