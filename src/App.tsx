@@ -13,6 +13,7 @@ import SpinnerPortal from '@/components/Spinner';
 import AuthErrorBoundary from '@/context/AuthErrorBoundary';
 import ErrorPage from '@/pages/Error';
 import CommonError from '@/interceptor/CommonError';
+import Watch from '@/pages/Watch';
 
 const GuardRouter = ({ children }: { children: React.ReactNode }) => {
   const { session } = useAuth();
@@ -34,6 +35,14 @@ const router = createBrowserRouter([
       { path: 'movie/:movieId', element: <Detail /> },
       { path: 'search', element: <Search /> },
       { path: 'favorite', element: <Favorite /> },
+      {
+        path: 'watch/:movieId',
+        element: (
+          <GuardRouter>
+            <Watch />
+          </GuardRouter>
+        ),
+      },
       {
         path: 'login',
         element: (
