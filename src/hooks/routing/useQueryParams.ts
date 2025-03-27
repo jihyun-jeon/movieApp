@@ -1,12 +1,27 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const useUrlParams = () => {
+/** 다양한 타입의 URL 쿼리 파라미터를 상태처럼 사용하는 훅 */
+const useQueryState = <T extends string | number | boolean>(key: string, defaultValue?: T) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const queryParams = new URLSearchParams(search);
 
-  const getSearchParam = (key: string) => queryParams.get(key);
+  // 조회
+  let currentValue: T;
 
+  const paramValue = queryParams.get(key);
+
+  if (!paramValue) {
+    currentValue = defaultValue as T;
+  } else if (typeof paramValue === 'number') {
+    currentValue = Number(paramValue) as T;
+  } else if (typeof paramValue === 'boolean') {
+    currentValue = (paramValue === 'true') as T;
+  } else {
+    currentValue = paramValue as T;
+  }
+
+  // 업데이트
   const updateSearchParams = (newParams: Record<string, string>) => {
     Object.entries(newParams).forEach(([key, value]) => {
       if (value) {
@@ -15,40 +30,17 @@ const useUrlParams = () => {
         queryParams.delete(key);
       }
     });
+  };
 
+  const setValue = (newValue: T) => {
+    updateSearchParams({ [key]: String(newValue) });
     navigate({
       pathname,
       search: queryParams.toString(),
     });
   };
 
-  /** 문자열 타입의 URL 쿼리 파라미터를 상태처럼 사용하는 훅 */
-  const useStringQueryState = (key: string, defaultValue: string = '') => {
-    const currentValue = getSearchParam(key) || defaultValue; // 쿼리 파라미터 조회(문자로)
-
-    const setValue = (newValue: string) => {
-      updateSearchParams({ [key]: newValue });
-    };
-
-    return [currentValue, setValue] as const;
-  };
-
-  /** 숫자 타입의 URL 쿼리 파라미터를 상태처럼 사용하는 훅 */
-  const useNumberQueryState = (key: string, defaultValue: number = 0) => {
-    const paramValue = getSearchParam(key);
-    const currentValue = paramValue ? Number(paramValue) : defaultValue; // 쿼리 파라미터 조회(숫자로)
-
-    const setValue = (newValue: number) => {
-      updateSearchParams({ [key]: String(newValue) });
-    };
-
-    return [currentValue, setValue] as const;
-  };
-
-  return {
-    useStringQueryState,
-    useNumberQueryState,
-  };
+  return [currentValue, setValue] as const;
 };
 
-export default useUrlParams;
+export default useQueryState;

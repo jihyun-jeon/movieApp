@@ -1,14 +1,13 @@
 import usePathParams from '@/hooks/routing/usePathParams';
-import useUrlParams from '@/hooks/routing/useQueryParams';
+import useQueryState from '@/hooks/routing/useQueryParams';
 import useNavigateTo from '@/hooks/routing/useUrlNavigation';
 import { X } from 'lucide-react';
 
 const Watch = () => {
-  const { useStringQueryState } = useUrlParams();
   const goTo = useNavigateTo();
 
   const [movieId, setMovieId] = usePathParams('movieId', 0);
-  const [videoId, setVideoId] = useStringQueryState('play');
+  const [videoId, setVideoId] = useQueryState<string>('play');
 
   return (
     <div className="fixed inset-0 w-screen h-screen bg-black px-6">

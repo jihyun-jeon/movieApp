@@ -3,14 +3,13 @@ import { useGenreSearchMoviesQuery, useKeywordSearchMoviesQuery } from '@/hooks/
 import { Movie } from '@/types/movieType';
 import { TMDB_LANGUAGE_KR } from '@/contants';
 import ToggleButtons from '@/pages/Search/components/ToggleButtons';
-import useUrlParams from '@/hooks/routing/useQueryParams';
+import useQueryState from '@/hooks/routing/useQueryParams';
 import PosterImage from '@/components/PosterImage';
 import useNavigateTo from '@/hooks/routing/useUrlNavigation';
 
 const Search = () => {
-  const { useStringQueryState } = useUrlParams();
-  const [searchKeyword] = useStringQueryState('query');
-  const [genreParam, setGenreParam] = useStringQueryState('with_genres');
+  const [searchKeyword] = useQueryState<string>('query');
+  const [genreParam, setGenreParam] = useQueryState<string>('with_genres');
   const goTo = useNavigateTo();
 
   const initialGenres = genreParam ? genreParam.split(',') : [];
